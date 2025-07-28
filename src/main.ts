@@ -6,21 +6,64 @@ const gamesButton: HTMLElement | null = document.getElementById('games-button');
 const portfolioButton: HTMLElement | null = document.getElementById('portfolio-button');
 
 const adventureImage = document.getElementById("adventure-image") as HTMLImageElement | null;
+const gameImage = document.getElementById("game-image") as HTMLImageElement | null;
+const languageImage = document.getElementById("language-image") as HTMLImageElement | null;
 
 const previousAdventureButton: HTMLElement | null = document.getElementById('prev-adventure-button');
 const nextAdventureButton: HTMLElement | null = document.getElementById('next-adventure-button');
 const AdventureFooter: HTMLElement | null = document.getElementById("adventure-footer")
 
-let on_current_adventure: number = 0
-let adventure_images: string[] = [
-  "assets/baileyAdventure/Bailey at the pier.jpg",
-  "assets/baileyAdventure/Bailey at the port.jpeg",
-  "assets/baileyAdventure/Bailey touching grass.jpg",
-  "assets/baileyAdventure/Bailey at auchwitz.jpeg",
-  "assets/baileyAdventure/Bailey at the saltmines.jpeg"
+const previousGameButton: HTMLElement | null = document.getElementById('prev-game-button');
+const nextGameButton: HTMLElement | null = document.getElementById('next-game-button');
+const gameFooter: HTMLElement | null = document.getElementById("game-footer")
+
+const previousLanguageButton: HTMLElement | null = document.getElementById('prev-language-button');
+const nextLanguageButton: HTMLElement | null = document.getElementById('next-language-button');
+const languageFooter: HTMLElement | null = document.getElementById("language-footer")
+
+let onCurrentLanguage: number = 0
+let languageImages: string[] = [
+  "Python.png",
+  "Lua.png",
+  "TypeScript.jpg",
+  "CSharp.png",
+  "Rust.png"
 ]
 
-let adventure_footer: string[] = [
+let languageFooterText: string[] = [
+  "Python is the very first language that I wrote in, back in 2020 when I started getting serious about coding!",
+  "Ok, I lied a little, technically Lua was the first language I wrote code in back in 2017 when i \"Built\" Roblox games.",
+  "Hey look! It's TypeScript, the very same lang this website is built using! I've just started learning this lang but it's literally JavaScript which I'm a \"god\" at.",
+  "C# is one of those languages I passively use, I don't use it much anymore as it was mainly for unity but now I use, the best game engine, Godot!",
+  "Rust... Yes rust. I don't use rust at all other than when I'm bored and want to test my knowledge in rust (It isn't good)"
+]
+
+let onCurrentGame: number = 0
+let gameImages: string[] = [
+  "Sus clicker.png",
+  "Blocky.png",
+  "ClickyMMO.png",
+  "Leland slug.png",
+
+]
+
+let gameFooterText: string[] = [
+  "Sus clicker, this game is my pride and joy, I've been making it for years! <a class='text-[#ff8c69]' href='https://itsbaileyx3525.itch.io/sus-clicker-remastered' target='_blank'>Check it out here!</a>",
+  "They call me blocky is a simple-ish game I'm making for Summer of making! Hoping to get a 3D printer. <a class='text-[#ff8c69]' href='https://itsbaileyx3525.itch.io/they-call-me-blocky' target='_blank'>Check it out here!</a>",
+  "ClickyMMO, I was inspired by 8bitMMO but with this you can draw anything with anyone! <a class='text-[#ff8c69]' href='https://itsbaileyx3525.itch.io/clickymmo' target='_blank'>Check it out here!</a>",
+  "Leland and the slug, A silly game that we had to make for college. It is not a good game lol. <a class='text-[#ff8c69]' href='https://itsbaileyx3525.itch.io/leland-and-the-slug' target='_blank'>Check it out here!</a>"
+]
+
+let onCurrentAdventure: number = 0
+let adventureImages: string[] = [
+  "Bailey at the pier.jpg",
+  "Bailey at the port.jpeg",
+  "Bailey touching grass.jpg",
+  "Bailey at auchwitz.jpeg",
+  "Bailey at the saltmines.jpeg"
+]
+
+let adventureFooterText: string[] = [
   "Bailey outside (shock) walking down the pier at the local beach",
   "Yet another image of Bailey but this time he walked a buttload to see a city view.",
   "Here I am walking with my mates, just played muffin time and we had to take a picture!",
@@ -30,7 +73,7 @@ let adventure_footer: string[] = [
 
 function toggleDarkMode() {
   darkMode = !darkMode;
-  alert("haha, dark mode doesn't exist because dark mode is default")
+  alert("haha, dark mode doesn't exist because dark mode is default") //Should I make a dark mode?
 }
 
 darkModeToggle?.addEventListener('click', toggleDarkMode);
@@ -42,7 +85,8 @@ homeButton?.addEventListener('click', () => {
 })
 
 gamesButton?.addEventListener('click', () => {
-  window.location.href = "/games" //Unsure if github will let me strip them htmls, htaccess should work
+  window.location.href = "/games" //Unsure if github will let me strip them htmls, htaccess should work <-- Strips automatically no need for .htaccess
+  //Only issue is vite doesnt strip so its like heckin weird to deal with on prod vs live
 })
 
 portfolioButton?.addEventListener('click', () => {
@@ -50,27 +94,79 @@ portfolioButton?.addEventListener('click', () => {
 })
 
 previousAdventureButton?.addEventListener('click', () => {
-  on_current_adventure--
-  if (on_current_adventure === -1){
-    on_current_adventure = adventure_images.length - 1
+  onCurrentAdventure--
+  if (onCurrentAdventure === -1){
+    onCurrentAdventure = adventureImages.length - 1
   }
   if (adventureImage) {
-    adventureImage.src = adventure_images[on_current_adventure]
+    adventureImage.src = "assets/baileyAdventure/" + adventureImages[onCurrentAdventure]
   }
   if(AdventureFooter){
-    AdventureFooter.innerText = adventure_footer[on_current_adventure]
+    AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
   }
 })
 
 nextAdventureButton?.addEventListener('click', () => {
-  on_current_adventure++
-  if (on_current_adventure >= adventure_images.length){
-    on_current_adventure = 0
+  onCurrentAdventure++
+  if (onCurrentAdventure >= adventureImages.length){
+    onCurrentAdventure = 0
   }
   if (adventureImage) {
-    adventureImage.src = adventure_images[on_current_adventure]
+    adventureImage.src = "assets/baileyAdventure/" + adventureImages[onCurrentAdventure]
   }
   if(AdventureFooter){
-    AdventureFooter.innerText = adventure_footer[on_current_adventure]
+    AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
+  }
+})
+
+previousGameButton?.addEventListener('click', () => {
+  onCurrentGame--
+  if (onCurrentGame === -1){
+    onCurrentGame = gameImages.length - 1
+  }
+  if (gameImage) {
+    gameImage.src = "assets/baileyGames/" + gameImages[onCurrentGame]
+  }
+  if(gameFooter){
+    gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
+  }
+})
+
+nextGameButton?.addEventListener('click', () => {
+  onCurrentGame++
+  if (onCurrentGame >= gameImages.length){
+    onCurrentGame = 0
+  }
+  if (gameImage) {
+    gameImage.src = "assets/baileyGames/" + gameImages[onCurrentGame]
+  }
+  if(gameFooter){
+    gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
+  }
+})
+
+previousLanguageButton?.addEventListener('click', () => {
+  onCurrentLanguage--
+  if (onCurrentLanguage === -1){
+    onCurrentLanguage = languageImages.length - 1
+  }
+  if (languageImage) {
+    languageImage.src = "assets/baileyLanguage/" + languageImages[onCurrentLanguage]
+  }
+  if(languageFooter){
+    languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
+  }
+})
+
+nextLanguageButton?.addEventListener('click', () => {
+  onCurrentLanguage++
+  if (onCurrentLanguage >= languageImages.length){
+    onCurrentLanguage = 0
+  }
+  if (languageImage) {
+    languageImage.src = "assets/baileyLanguage/" + languageImages[onCurrentLanguage]
+  }
+  if(languageFooter){
+    languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
   }
 })
