@@ -18,15 +18,15 @@
 }
 
 .github-icon:hover {
-	content: url("/assets/github-dark.svg");
+	content: url("/assets/index/icons/github-dark.svg");
 }
 
 .youtube-icon:hover {
-	content: url("/assets/youtube-dark.svg");
+	content: url("/assets/index/icons/youtube-dark.svg");
 }
 
 .discord-icon:hover {
-	content: url("/assets/discord-dark.svg");
+	content: url("/assets/index/icons/discord-dark.svg");
 }
 
 @media (prefers-color-scheme: light) {

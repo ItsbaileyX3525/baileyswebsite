@@ -1,9 +1,6 @@
 let darkMode: boolean = false;
 
 const darkModeToggle: HTMLElement | null = document.getElementById('dark-mode-toggle');
-const homeButton: HTMLElement | null = document.getElementById('home-button');
-const gamesButton: HTMLElement | null = document.getElementById('games-button');
-const portfolioButton: HTMLElement | null = document.getElementById('portfolio-button');
 
 const adventureImage = document.getElementById("adventure-image") as HTMLImageElement | null;
 const gameImage = document.getElementById("game-image") as HTMLImageElement | null;
@@ -78,20 +75,7 @@ function toggleDarkMode() {
 
 darkModeToggle?.addEventListener('click', toggleDarkMode);
 
-//Screw dom loaded
-
-homeButton?.addEventListener('click', () => {
-  window.location.href = "/"
-})
-
-gamesButton?.addEventListener('click', () => {
-  window.location.href = "/games" //Unsure if github will let me strip them htmls, htaccess should work <-- Strips automatically no need for .htaccess
-  //Only issue is vite doesnt strip so its like heckin weird to deal with on prod vs live
-})
-
-portfolioButton?.addEventListener('click', () => {
-  window.location.href = "/portfolio"
-})
+//Screw dom loaded <--- nvm typescript chillin with no dom loading
 
 previousAdventureButton?.addEventListener('click', () => {
   onCurrentAdventure--
@@ -99,7 +83,7 @@ previousAdventureButton?.addEventListener('click', () => {
     onCurrentAdventure = adventureImages.length - 1
   }
   if (adventureImage) {
-    adventureImage.src = "assets/baileyAdventure/" + adventureImages[onCurrentAdventure]
+    adventureImage.src = "assets/index/baileyAdventure/" + adventureImages[onCurrentAdventure]
   }
   if(AdventureFooter){
     AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
@@ -112,7 +96,7 @@ nextAdventureButton?.addEventListener('click', () => {
     onCurrentAdventure = 0
   }
   if (adventureImage) {
-    adventureImage.src = "assets/baileyAdventure/" + adventureImages[onCurrentAdventure]
+    adventureImage.src = "assets/index/baileyAdventure/" + adventureImages[onCurrentAdventure]
   }
   if(AdventureFooter){
     AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
@@ -125,7 +109,7 @@ previousGameButton?.addEventListener('click', () => {
     onCurrentGame = gameImages.length - 1
   }
   if (gameImage) {
-    gameImage.src = "assets/baileyGames/" + gameImages[onCurrentGame]
+    gameImage.src = "assets/index/baileyGames/" + gameImages[onCurrentGame]
   }
   if(gameFooter){
     gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
@@ -138,7 +122,7 @@ nextGameButton?.addEventListener('click', () => {
     onCurrentGame = 0
   }
   if (gameImage) {
-    gameImage.src = "assets/baileyGames/" + gameImages[onCurrentGame]
+    gameImage.src = "assets/index/baileyGames/" + gameImages[onCurrentGame]
   }
   if(gameFooter){
     gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
@@ -151,7 +135,7 @@ previousLanguageButton?.addEventListener('click', () => {
     onCurrentLanguage = languageImages.length - 1
   }
   if (languageImage) {
-    languageImage.src = "assets/baileyLanguage/" + languageImages[onCurrentLanguage]
+    languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
   }
   if(languageFooter){
     languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
@@ -164,7 +148,7 @@ nextLanguageButton?.addEventListener('click', () => {
     onCurrentLanguage = 0
   }
   if (languageImage) {
-    languageImage.src = "assets/baileyLanguage/" + languageImages[onCurrentLanguage]
+    languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
   }
   if(languageFooter){
     languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
