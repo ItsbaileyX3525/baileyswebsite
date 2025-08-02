@@ -148,9 +148,21 @@ nextLanguageButton?.addEventListener('click', () => {
     onCurrentLanguage = 0
   }
   if (languageImage) {
-    languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
+    languageImage.src = "assets/baileyLanguage/" + languageImages[onCurrentLanguage]
   }
   if(languageFooter){
     languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
   }
 })
+
+for (const e of document.querySelectorAll('img')) {
+	e.addEventListener('error', function(event) {
+		const target = event.target as HTMLImageElement;
+		target.src = 'NoImage.jpg';
+		target.onerror = null;
+	});
+
+	if (e.complete && e.naturalWidth === 0) {
+		e.dispatchEvent(new Event('error'));
+	}
+}

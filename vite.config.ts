@@ -8,7 +8,8 @@ export default defineConfig({
 		rollupOptions: {
 			input: {
 				main: './index.html',
-				games: './games.html'
+				games: './games.html',
+				portfolio: './portfolio.html'
 			}
 		}
 	}

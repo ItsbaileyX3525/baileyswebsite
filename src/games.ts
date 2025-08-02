@@ -12,4 +12,16 @@ function toggleReveal(el: HTMLElement, arr: HTMLElement): void {
     }
 }
 
+for (const e of document.querySelectorAll('img')) {
+	e.addEventListener('error', function(event) {
+		const target = event.target as HTMLImageElement;
+		target.src = 'NoImage.jpg';
+		target.onerror = null;
+	});
+
+	if (e.complete && e.naturalWidth === 0) {
+		e.dispatchEvent(new Event('error'));
+	}
+}
+
 (window as any).toggleReveal = toggleReveal;
