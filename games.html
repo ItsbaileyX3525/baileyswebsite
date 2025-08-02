@@ -1,12 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="src/style.css">
-    <title>Games section</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="src/style.css">
+  <title>Game section</title>
 </head>
 <body>
-    
+  <div class="grid grid-cols-3 gap-2 text-center bg-blue-300 pb-0.5">
+    <div id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Home</div>
+    <div id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Games</div>
+    <div id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
+  </div>
+  <h1 class="text-center mt-2 text-3xl">
+    Welcome to the games page!</h1>
+  <h2 class="text-center text-2xl">
+    Godot exports
+  </h2>
+  <h2 class="text-center text-[12px]">
+    All hosted on this site!
+  </h2>
+  <div class="grid grid-cols-4 gap-1 text-center center mt-4 wrap-break-word">
+    <div class="h-1/4">
+        <h3 class="border-b-2 border-black bg-gray-800">Sus clicker remastered</h3>
+        <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Sus clicker.png" alt="sus clicker image">
+        <p class="bg-gray-900">
+            An exicting game about clicking a sussy baka, one cannot find a better game than this one!
+        </p>
+        <div id="bonus-content-sus" class="overflow-scroll transition-max-height duration-500 ease-in-out max-h-0">
+            <p class="bg-gray-900">Sus clicker remastered, as 
+                per the title name, is a remastered version of my 
+                first game called "Sus clicker", sus clicker was a 
+                little project I worked on during my time at 
+                school, using the unity game engine. I would pump 
+                out updates every week or so but due to the fact I 
+                had only just started coding, my skills were very 
+                limited, causing the game to become a terrible 
+                mess, this lead to me creating the "big change" 
+                will broke the balance of the entire game making 
+                it beatable in like 12 minutes, undesirable. So 
+                after about 6 months I found out about godot 
+                engine and that's when my work begun (after I had 
+                already made a few games with godot). The game 
+                was supposed to be a little remaster, having 
+                some of the shops from the original and all the 
+                same features, and it still does, but the game 
+                has a lot more new features, such as new shops, 
+                new prestige systems and none of the old annoying 
+                bugs, numbers in this game can also reach 
+                infinity beacause of the godot big numbers 
+                addon! This game is my pride and joy and I 
+                love it dearly and if you play it, I hope you 
+                love it too!</p>
+        </div>
+        <p id="arrow-sus" class="self-center text-center bg-gray-900" onclick="toggleReveal(getElementById('bonus-content-sus'),getElementById('arrow-sus'))">
+            ↓
+        </p>
+        <h3 onclick="window.location.href='/games/susclicker/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+            Try it now!
+        </h3>
+    </div>
+    <div class="h-1/4 ">
+        <h3 class="border-b-2 border-black bg-gray-800">They call me blocky!</h3>
+        <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/They call me blocky.png" alt="They call me blocky image">
+        <p class="bg-gray-900">
+            My first game that attempts to tell a story through gameplay, it took me 50 hours to make and I hope you enjoy it!
+        </p>
+        <div id="bonus-content-blocky" class="overflow-scroll transition-max-height duration-500 ease-in-out max-h-0">
+            <p class="bg-gray-900">
+                They call me blocky, a simple but not-so-simple game I made in the godot engine (shock) 
+                but this game was made for the summer of making hosted by hackclub, the game features a terrible or good story (No-one has played it yet so IDK)
+                where you are a block thing and you complete tests to uncover the
+                mystery as to why you are completing these tests in the first place.
+                It took me 52 hours to make it, not too long but, according to my friend,
+                it is a great game nevertheless.
+            </p>
+        </div>
+        <p id="arrow-blocky" class="self-center text-center bg-gray-900" onclick="toggleReveal(getElementById('bonus-content-blocky'),getElementById('arrow-blocky'))">
+            ↓
+        </p>
+        <h3 onclick="window.location.href='/games/theycallmeblocky/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+            Give it a shot!
+        </h3>
+    </div>
+    <div class="h-1/4">
+        <h3></h3>
+    </div>
+    <div class="h-1/4">
+        <h3></h3>
+    </div>
+  </div>
 </body>
+<script type="module" src="src/games.ts"></script>
+<script type="module" src="src/nav.ts"></script>
 </html>
