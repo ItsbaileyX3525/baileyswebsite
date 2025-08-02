@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>The Platformer</title>
+    <link rel="shortcut icon" type="image/png" href="assets/icon.png">
+  </head>
+  <script>
+    document.addEventListener('contextmenu', event => event.preventDefault());
+    document.onkeydown = function (event) {
+    if (event.keyCode == 123) {
+        return false;}}
+    document.addEventListener('keydown', function(event) {
+    if (event.shiftKey) {
+        return false;}});
+// Audio
+bg_music = new Audio('assets/audio/main music.ogg')
+bg_music.loop = true
+death = new Audio('assets/audio/death.mp3')
+complete = new Audio('assets/audio/LevelDone.mp3')
+click = new Audio('assets/audio/lever.ogg')
+tutorialPop = new Audio('assets/audio/pop.ogg')
+seperateAudio = new Audio('assets/audio/seperateAudio.mp3')
+  </script>
+<script>
+if(/Android/i.test(navigator.userAgent)) {
+  console.log("On android");
+} else if(/webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  console.log("Not supported");
+} else {
+  console.log("On desktop");
+}
+</script>
+
+<script src="taptapir/taptapir.js"></script>
+<script src="taptapir/taptapir_gamepad.js"></script>
+<script type="text/javascript">
+True = true;
+False = false;
+ASSETS_FOLDER = 'assets/';
+set_orientation('landscape');
+set_background_color("rgb(210,180,140)");
+set_window_color("rgb(23,23,23)");
+set_scale(0x1);
+distance_2d = distance;
+function EditorCamera() {
+  editorMode = True;
+}
+jumping = False;
+canMove = False;
+canJump = True;
+hiddenbuttoncounter = 0x0;
+collider_objects = [];
+moving_blocks = [];
+laserbeams = [];
+levers = [];
+gravity = 0x0;
+velocity = 0x0;
+speed = 0.005;
+movingBlockSpeed = 0.002;
+groundLevel = 0x0;
+// Delta time for framerate independence
+lastTime = performance.now();
+deltaTime = 0;
+collidingLeft = False;
+collidingRight = False;
+startLevel = False;
+editorMode = False;
+FinishedLevelOne = False;
+FinishedLevelTwo = False;
+FinishedLevelThree = False;
+TutorialJump = True;
+cameFromLevel1 = False;
+cameFromLevel2 = False;
+cameFromLevel3 = False;
+TutorialCompleteExist = False;
+function Block(_0x1551cf = 0x0, _0x24d49e = 0x0, _0x54764c = "textures/grass_side.png") {
+  block = new Entity({
+    'x': _0x1551cf,
+    'y': _0x24d49e,
+    'z': player.z,
+    'texture': _0x54764c,
+    'scale': 0.05,
+    'ypos': _0x24d49e + 0.05
+  });
+  collider_objects.push(block);
+  return block;
+}
+function Moving_Block(_0xb4d644 = 0x0, _0xa0bfde = 0x0, _0x37cf34 = 0.8, _0x270892 = 1.2, _0x5c7dd5 = "textures/moving_platform.png") {
+  moving_block = new Entity({
+    'x': _0xb4d644,
+    'y': _0xa0bfde,
+    'z': player.z,
+    'texture': _0x5c7dd5,
+    'scale': 0.05,
+    'ypos': _0xa0bfde + 0.05,
+    'fromX': _0x37cf34,
+    'toX': _0x270892,
+    'movingRight': True
+  });
+  collider_objects.push(moving_block);
+  moving_blocks.push(moving_block);
+  return moving_block;
+}
+function Laserbeam(_0x114827 = 0x0, _0x3ce197 = 0x0) {
+  laserHold = new Entity({
+    'x': _0x114827,
+    'y': _0x3ce197,
+    'z': player.z,
+    'color': color.gray,
+    'scale': 0.05,
+    'z': -0x1
+  });
+  laserbeam = new Entity({
+    'x': _0x114827 - 0.0005,
+    'y': _0x3ce197 - 0.1465,
+    'scale': [0.025, 0.25],
+    'color': color.red,
+    'z': 0x1
+  });
+  collider_objects.push(laserHold);
+  laserbeams.push(laserbeam);
+  laserbeam;
+  return laserHold;
+}
+function LaserbeamFunc() {
+  for (var _0xea93f8 of laserbeams) {
+    if (player.x <= _0xea93f8.x + 0.025 && player.x >= _0xea93f8.x - 0.025 && player.y <= _0xea93f8.y + 0.12 && player.y >= _0xea93f8.y - 0.12 && _0xea93f8.alpha == 0x1) {
+      deathFunc();
+    }
+  }
+}
+function disabled() {
+  for (var _0x31fdb3 of laserbeams) {
+    _0x31fdb3.alpha = 0x0;
+  }
+  after(0x1, function () {
+    enabled();
+  });
+}
+function enabled() {
+  for (var _0x4bdce6 of laserbeams) {
+    _0x4bdce6.alpha = 0x1;
+  }
+  after(0x1, function () {
+    disabled();
+  });
+}
+enabled();
+new Entity({
+  'update': LaserbeamFunc,
+  'x': -0x98967f
+});
+function Lever(_0x4c58f9 = 0x0, _0x4c09de = 0.15) {
+  lever = new Entity({
+    'flipped': False,
+    'x': _0x4c58f9,
+    'y': _0x4c09de,
+    'texture': "textures/lever_on.png",
+    'scale': [0.035, 0.06]
+  });
+  levers.push(lever);
+  return levers;
+}
+function LeverUpdate() {
+  for (var _0x1ceae1 of levers) {
+    dist = distance_2d(player.xy, _0x1ceae1.xy);
+    if (dist <= 0.045 && key == 'e') {
+      _0x1ceae1.flipped = !_0x1ceae1.flipped;
+      click.pause();
+      click.currentTime = 0x0;
+      click.play();
+    }
+    if (_0x1ceae1.flipped === True) {
+      _0x1ceae1.texture = 'textures/lever_on.png';
+    } else {
+      _0x1ceae1.texture = "textures/lever_off.png";
+    }
+  }
+}
+new Entity({
+  'input': LeverUpdate,
+  'x': 0xde0b6b3a7640000
+});
+function update() {
+  // Calculate delta time for framerate independence
+  const currentTime = performance.now();
+  deltaTime = Math.min((currentTime - lastTime) / 16.67, 4); // Normalize to 60fps, cap at 4x speed
+  lastTime = currentTime;
+  
+  if (hiddenbuttoncounter === 0x3) {
+    hiddenbuttoncounter += 0x1;
+    glitch = new Entity({
+      'texture': "textures/regular sus.gif",
+      'parent': camera
+    });
+    bg_music.pause();
+    seperateAudio.play();
+    canMove = False;
+    canJump = False;
+    after(0x1b, function () {
+      bg_music.play();
+      canMove = True;
+      canJump = True;
+    });
+  }
+  speed = 0.005;
+  ground = groundLevel;
+  deaths_text.text = "Deaths: " + deaths;
+  sky.x = camera.x * 0x1;
+  sky.y = camera.y * 0x1;
+  if (!editorMode) {
+    camera.x = lerp(camera.x, player.x, 0.025 * deltaTime);
+    camera.y = lerp(camera.y, player.y + 0.2, 0.025 * deltaTime);
+  }
+  for (var _0x1ee185 of collider_objects) {
+    if (player.x >= _0x1ee185.x - 0.05 && player.x <= _0x1ee185.x && player.y === _0x1ee185.y && player.y >= _0x1ee185.y + 0.5) {
+      collidingRight = True;
+    } else {
+      after(0.1, function () {
+        collidingRight = False;
+      });
+    }
+    if (player.x <= _0x1ee185.x + 0.05 && player.x >= _0x1ee185.x && player.y === _0x1ee185.y) {
+      collidingLeft = True;
+    }
+    if (_0x1ee185.x > 0x0) {
+      if (player.y >= _0x1ee185.ypos && player.x >= _0x1ee185.x - 0.042 && player.x <= _0x1ee185.x + 0.042) {
+        ground = max(ground, _0x1ee185.ypos);
+      }
+    } else if (_0x1ee185.x < 0x0) {
+      if (player.y >= _0x1ee185.ypos && player.x <= _0x1ee185.x + 0.042 && player.x >= _0x1ee185.x - 0.042) {
+        ground = max(ground, _0x1ee185.ypos);
+      }
+    } else {
+      ground = max(ground, 0x0);
+    }
+    if (held_keys.a) {
+      collidingRight = False;
+    }
+  }
+  if (editorMode) {
+    if (held_keys.w) {
+      camera.y += speed * deltaTime;
+    }
+    if (held_keys.a) {
+      camera.x -= speed * deltaTime;
+    }
+    if (held_keys.s) {
+      camera.y -= speed * deltaTime;
+    }
+    if (held_keys.d) {
+      camera.x += speed * deltaTime;
+    }
+  }
+  if (held_keys.d && canMove && !collidingRight && !editorMode || held_keys["gamepad dpad right"] && canMove && !collidingRight && !editorMode) {
+    player.x += speed * deltaTime;
+    collidingLeft = False;
+    player.texture = textureHolder1.texture;
+  }
+  if (held_keys.a && canMove && !collidingLeft && !editorMode || held_keys["gamepad dpad left"] && canMove && !collidingRight && !editorMode) {
+    player.x -= speed * deltaTime;
+    collidingRight = False;
+    player.texture = textureHolder2.texture;
+  }
+  if (velocity <= 0x0) {
+    if (player.y >= ground) {
+      gravity += 0.00035 * deltaTime;
+      player.y -= (0.0007 + gravity) * deltaTime;
+    }
+    if (player.y <= ground) {
+      jumping = False;
+      player.y = ground;
+    }
+  }
+  if (velocity > 0x0) {
+    player.y += (velocity / 0x3c) * deltaTime;
+    velocity -= 0.1 * deltaTime;
+  }
+  if (startLevel === True) {
+    player.x = blockOne.x;
+    player.y = blockOne.y + 0.05;
+    startLevel = False;
+  }
+  if (player.y === 0x0) {
+    deathFunc();
+  }
+  for (var _0x28b557 of moving_blocks) {
+    if (player.x >= _0x28b557.x - 0.025 && player.x <= _0x28b557.x + 0.025 && player.y >= _0x28b557.y - 0.05 && player.y <= _0x28b557.y + 0.05) {
+      if (player.y <= _0x28b557.y + 0.05) {
+        player.x = _0x28b557.x;
+      }
+    }
+  }
+  for (var _0x28b557 of moving_blocks) {
+    if (_0x28b557.x >= _0x28b557.toX) {
+      _0x28b557.movingRight = False;
+    }
+    if (_0x28b557.x <= _0x28b557.fromX) {
+      _0x28b557.movingRight = True;
+    }
+    if (_0x28b557.movingRight) {
+      if (_0x28b557.x <= _0x28b557.toX) {
+        _0x28b557.x += movingBlockSpeed * deltaTime;
+      }
+    }
+    if (!_0x28b557.movingRight) {
+      if (_0x28b557.x >= _0x28b557.fromX) {
+        _0x28b557.x -= movingBlockSpeed * deltaTime;
+      }
+    }
+  }
+}
+function deathFunc() {
+  startLevel = True;
+  deaths += 0x1;
+  death.pause();
+  death.currentTime = 0x0;
+  death.play();
+}
+function JumpFunc() {
+  if (!editorMode && !jumping && canJump) {
+    ground = player.y;
+    velocity = 1.2;
+    gravity = 0x0;
+    jumping = True;
+    if (!TutorialJump) {
+      TutorialJump = True;
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        MobileTutorial2();
+      } else {
+        ComputerTutorial2();
+      }
+    }
+  }
+}
+player = new Entity({
+  'texture': "textures/player_right.png",
+  'scale': 0.05
+});
+// Initialize delta time
+lastTime = performance.now();
+textureHolder1 = new Entity({
+  'scale': 0.1,
+  'x': 0xe8d4a50fff,
+  'texture': "textures/player_right.png"
+});
+textureHolder2 = new Entity({
+  'scale': 0.1,
+  'x': 0xe8d4a50fff,
+  'texture': "textures/player_left.png"
+});
+sky = new Entity({
+  'texture': "textures/sky.png",
+  'scale': [1.8, 1.005],
+  'z': 0xa
+});
+deaths = 0x0;
+deaths_text = new Text({
+  'parent': camera,
+  'text_origin': [0x0, 0x0],
+  'scale': 0.75,
+  'y': 0.4,
+  'text_size': 0x5,
+  'text_color': color.white
+});
+function Tutorial() {
+  canMove = True;
+  startLevel = True;
+  blockOne = Block(x = 0.1, y = 0.15);
+}
+function level1() {
+  canMove = True;
+  startLevel = True;
+  after(0x14, function () {
+    hiddenButtonOne = new Button({
+      'x': 0x0,
+      'y': 0.25,
+      'scale': 0.05,
+      'color': color.gray,
+      'parent': scene,
+      'alpha': 0.25
+    });
+    cameFromLevel1 = True;
+    hiddenButtonOne.on_click = function () {
+      tutorialPop.play();
+      hiddenbuttoncounter += 0x1;
+      destroy(hiddenButtonOne);
+    };
+  });
+  blockOne = Block(x = 0.1, y = 0.15);
+  blockTwo = Block(x = 0.2, y = 0.2);
+  blockThree = Block(x = 0.3, y = 0.2);
+  blockFour = Block(x = 0.4, y = 0.3);
+  blockFive = Block(x = 0.5, y = 0.35);
+  blockSix = Block(x = 0.7, y = 0.3);
+  movingBlockOne = Moving_Block(x = 0.75, y = 0.3, fromX = 0.75, toX = 1.2);
+  blockSeven = Block(x = 1.25, y = 0.3);
+  movingBlockTwo = Moving_Block(x = 1.3, y = 0.4, fromX = 1.3, toX = 1.6);
+  blockEight = Block(x = 1.65, y = 0.35);
+  blockNine = Block(x = 1.75, y = 0.35);
+  finishFlag = new Entity({
+    'scale': [0.05, 0.1],
+    'texture': "textures/finish.png",
+    'x': 1.75,
+    'y': 0.425,
+    'update': flag
+  });
+}
+function flag() {
+  dist = distance_2d(player.xy, finishFlag.xy);
+  if (dist <= 0.03 && FinishedLevelOne === False) {
+    l1.enabled = True;
+    FinishedLevelOne = True;
+    currentLevel = 0x2;
+    localStorage.setItem("curentLevel", currentLevel);
+    bg_music.pause();
+    bg_music.currentTime = 0x0;
+    complete.play();
+    destroy(finishFlag);
+    after(0x3, function () {
+      bg_music.play();
+    });
+    for (var _0x5b1f29 of collider_objects) {
+      destroy(_0x5b1f29);
+    }
+    for (var _0x1e6062 of moving_blocks) {
+      destroy(_0x1e6062);
+    }
+  }
+}
+function level2() {
+  if (cameFromLevel1) {
+    destroy(hiddenButtonOne);
+  }
+  canMove = True;
+  startLevel = True;
+  after(0x14, function () {
+    cameFromLevel2 = True;
+    hiddenButtonTwo = new Button({
+      'x': 0.55,
+      'y': 0.6,
+      'scale': 0.05,
+      'color': color.gray,
+      'parent': scene,
+      'alpha': 0.25
+    });
+    hiddenButtonTwo.on_click = function () {
+      tutorialPop.play();
+      hiddenbuttoncounter += 0x1;
+      destroy(hiddenButtonTwo);
+    };
+  });
+  blockOne = Block(x = 0.1, y = 0.15);
+  blockTwo = Block(x = 0.23, y = 0.26);
+  blockThree = Block(x = 0.35, y = 0.35);
+  laserOne = Laserbeam(x = 0.16, y = 0.55);
+  movingBlockOne = Moving_Block(x = 0.4, y = 0.35, fromX = 0.4, toX = 0.7);
+  blockFour = Block(x = 0.75, y = 0.35);
+  laserTwo = Laserbeam(x = 0.8, y = 0.6);
+  blockFive = Block(x = 0.85, y = 0.35);
+  blockSix = Block(x = 0x1, y = 0.4);
+  movingBlockTwo = Moving_Block(x = 1.05, y = 0.45, fromX = 1.05, toX = 1.3);
+  blockSeven = Block(x = 1.35, y = 0.45);
+  L2finishFlag = new Entity({
+    'scale': [0.05, 0.1],
+    'texture': "textures/finish.png",
+    'x': 1.35,
+    'y': 0.525,
+    'update': flag2
+  });
+}
+function flag2() {
+  dist = distance(player.xy, L2finishFlag.xy);
+  if (dist <= 0.028) {
+    destroy(L2finishFlag);
+    currentLevel = 0x3;
+    localStorage.setItem('curentLevel', currentLevel);
+    l2.enabled = True;
+    bg_music.pause();
+    bg_music.currentTime = 0x0;
+    complete.play();
+    after(0x3, function () {
+      bg_music.play();
+    });
+    for (var _0x451ecf of collider_objects) {
+      destroy(_0x451ecf);
+    }
+    for (var _0x36231f of moving_blocks) {
+      destroy(_0x36231f);
+    }
+    for (var _0x5d355b of laserbeams) {
+      destroy(_0x5d355b);
+    }
+  }
+}
+function level3() {
+  if (cameFromLevel2) {
+    destroy(hiddenButtonTwo);
+  }
+  canMove = True;
+  startLevel = True;
+  after(0x14, function () {
+    cameFromLevel3 = True;
+    hiddenButtonThree = new Button({
+      'x': 0.75,
+      'y': 0.8,
+      'scale': 0.05,
+      'color': color.gray,
+      'parent': scene,
+      'alpha': 0.25
+    });
+    hiddenButtonThree.on_click = function () {
+      tutorialPop.play();
+      hiddenbuttoncounter += 0x1;
+      destroy(hiddenButtonThree);
+    };
+  });
+  blockOne = Block(x = 0.1, y = 0.15);
+  blockTwo = Block(x = 0.25, y = 0.25);
+  movingBlockOne = Moving_Block(x = 0.3, y = 0.3, fromX = 0.3, toX = 0.5);
+  blockThree = Block(x = 0.6, y = 0.4);
+  laserOne = Laserbeam(x = 0.65, y = 0.65);
+  blockFour = Block(x = 0.7, y = 0.5);
+  laserTwo = Laserbeam(x = 0.75, y = 0.75);
+  blockFive = Block(x = 0.8, y = 0.5);
+  blockSix = Block(x = 0.95, y = 0.6);
+  blockSeven = Block(x = 0x1, y = 0.6);
+  L3finishFlag = new Entity({
+    'scale': [0.05, 0.1],
+    'texture': "textures/finish.png",
+    'x': 0x1,
+    'y': 0.675,
+    'update': flag3
+  });
+}
+function flag3() {
+  dist = distance(player.xy, L3finishFlag.xy);
+  if (dist <= 0.028) {
+    destroy(L3finishFlag);
+    currentLevel = 0x4;
+    localStorage.setItem("curentLevel", currentLevel);
+    l3.enabled = True;
+    bg_music.pause();
+    bg_music.currentTime = 0x0;
+    complete.play();
+    after(0x3, function () {
+      bg_music.play();
+    });
+    for (var _0x2b1376 of collider_objects) {
+      destroy(_0x2b1376);
+    }
+    for (var _0x9f1d08 of moving_blocks) {
+      destroy(_0x9f1d08);
+    }
+    for (var _0x5e9764 of laserbeams) {
+      destroy(_0x5e9764);
+    }
+  }
+}
+function levelFinished() {
+  if (cameFromLevel3) {
+    destroy(hiddenButtonThree);
+  }
+  canMove = True;
+  startLevel = True;
+  blockOne = Block(x = 0.1, y = 0.15);
+  blockTwo = Block(x = 0.15, y = 0.15);
+  blockThree = Block(x = 0.2, y = 0.15);
+  blockFour = Block(x = 0.25, y = 0.15);
+  movingPlatformOne = Moving_Block(x = 0.3, y = 0.15, fromX = 0.3, toX = 0.9);
+  blockThree = Block(x = 0.9, y = 0.2);
+  tutorialPop.play();
+  lf1 = new Text({
+    'text': "Congrats! You finished!",
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(lf1);
+    tutorialPop.play();
+    lf2 = new Text({
+      'text': "Thanks for playing!",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.3
+    });
+    after(0xa, function () {
+      destroy(lf2);
+      currentLevel = 0x0;
+      localStorage.setItem("Interacted", '1');
+      window.parent.postMessage("user-interacted", '*');
+      localStorage.setItem("curentLevel", currentLevel);
+      location.reload();
+    });
+  });
+}
+currentLevel = localStorage.getItem("curentLevel");
+if (currentLevel === null) {
+  currentLevel = 0x0;
+  localStorage.setItem("curentLevel", currentLevel);
+  location.reload();
+}
+startGame = new Button({
+  'scale': 0x3,
+  'color': color.black,
+  'text_color': "white",
+  'text': "Click to start! (or press start on xbox)",
+  'z': -0x9
+});
+startGame.enabled = False;
+startGame.on_click = function () {
+  startGame.enabled = False;
+  bg_music.play();
+};
+if (currentLevel === '0') {
+  Tutorial();
+}
+if (currentLevel === '1') {
+  level1();
+  startGame.enabled = True;
+}
+if (currentLevel === '2') {
+  level2();
+  print("loaded level 2");
+  startGame.enabled = True;
+}
+if (currentLevel === '3') {
+  level3();
+  startGame.enabled = True;
+}
+if (currentLevel === '4') {
+  levelFinished();
+}
+eVar = False;
+function MobileTutorial() {
+  tutorialPop.play();
+  tut1 = new Text({
+    'text': "Hi.",
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(tut1);
+    tutorialPop.play();
+    tut2 = new Text({
+      'text': "And welcome to the platformer!",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.3
+    });
+    after(0x2, function () {
+      destroy(tut2);
+      tutorialPop.play();
+      tut3 = new Text({
+        'text': "Move the joystick up to jump!",
+        'color': color.clear,
+        'parent': camera,
+        'y': -0.25,
+        'x': 0.3
+      });
+      TutorialJump = False;
+    });
+  });
+}
+function MobileTutorial2() {
+  destroy(tut3);
+  tutorialPop.play();
+  tut4 = new Text({
+    'text': "Nicely done!",
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(tut4);
+    tutorialPop.play();
+    tut5 = new Text({
+      'text': "Move around by gliding the joystick left and right.",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.3
+    });
+    blockTwo = Block(x = 0.145, y = 0.15);
+    blockThree = Block(x = 0.07, y = 0.15);
+    blockFour = Block(x = 0.19, y = 0.15);
+    blockFive = Block(x = 0.23, y = 0.15);
+    updateHandlerForMobileControlsForTutorial = new Entity({
+      'alpha': 0x0,
+      'update': TestMovementMobile
+    });
+  });
+}
+eggandBaconSandwich = False;
+function TestMovementMobile() {
+  if (mobileMoveButton.x > -0.7 || mobileMoveButton < -0.78) {
+    after(0x2, function () {
+      if (!eggandBaconSandwich) {
+        MobileTutorial3();
+        eggandBaconSandwich = True;
+      }
+    });
+  }
+}
+function MobileTutorial3() {
+  destroy(tut5);
+  tutorialPop.play();
+  tut6 = new Text({
+    'text': "Nice moving, you're a natural!",
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(tut6);
+    tutorialPop.play();
+    tut7 = new Text({
+      'text': "There are a few obstacles about.",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.1
+    });
+    after(0x2, function () {
+      destroy(tut7);
+      tutorialPop.play();
+      tut8 = new Text({
+        'text': "For example, this moving block.",
+        'color': color.clear,
+        'parent': camera,
+        'y': -0.25,
+        'x': 0.3
+      });
+      movingPlatformOne = Moving_Block(x = 0.3, y = 0.15, fromX = 0.3, toX = 0.5);
+      after(0x3, function () {
+        destroy(tut8);
+        tut9 = new Text({
+          'text': "That's enough about that.",
+          'color': color.clear,
+          'parent': camera,
+          'y': -0.25,
+          'x': 0.3
+        });
+        tutorialPop.play();
+        after(0x2, function () {
+          destroy(tut9);
+          tut9 = new Text({
+            'text': "Let's move onto the main game!",
+            'color': color.clear,
+            'parent': camera,
+            'y': -0.25,
+            'x': 0.3
+          });
+          after(0x2, function () {
+            TutorialFlagStuff();
+          });
+        });
+      });
+    });
+  });
+}
+function ComputerTutorial() {
+  tutorialPop.play();
+  tut1 = new Text({
+    'text': 'Hi.',
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(tut1);
+    tutorialPop.play();
+    tut2 = new Text({
+      'text': "And welcome to the platformer!",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.3
+    });
+    after(0x2, function () {
+      destroy(tut2);
+      tutorialPop.play();
+      tut3 = new Text({
+        'text': "Press \"spacebar\" to jump!",
+        'color': color.clear,
+        'parent': camera,
+        'y': -0.25,
+        'x': 0.3
+      });
+      TutorialJump = False;
+    });
+  });
+}
+function ComputerTutorial2() {
+  destroy(tut3);
+  tutorialPop.play();
+  tut4 = new Text({
+    'text': "Nicely done!",
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(tut4);
+    tutorialPop.play();
+    tut5 = new Text({
+      'text': "Move around with \"A\" and \"D\"",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.3
+    });
+    blockTwo = Block(x = 0.145, y = 0.15);
+    blockThree = Block(x = 0.07, y = 0.15);
+    blockFour = Block(x = 0.19, y = 0.15);
+    blockFive = Block(x = 0.23, y = 0.15);
+    inputHandlerForComputerControlsForTutorial = new Entity({
+      'alpha': 0x0,
+      'input': TestMovementComputer
+    });
+  });
+}
+function TestMovementComputer() {
+  if (key === 'a' || key === 'd' || key == "gamepad dpad left" || key == "gamepad dpad right") {
+    after(0x2, function () {
+      if (!eggandBaconSandwich) {
+        ComputerTutorial3();
+        eggandBaconSandwich = True;
+      }
+    });
+  }
+}
+function ComputerTutorial3() {
+  destroy(tut5);
+  tutorialPop.play();
+  tut6 = new Text({
+    'text': "Nice moving, you're a natural!",
+    'color': color.clear,
+    'parent': camera,
+    'y': -0.25,
+    'x': 0.3
+  });
+  after(0x2, function () {
+    destroy(tut6);
+    tutorialPop.play();
+    tut7 = new Text({
+      'text': "There are a few obstacles about.",
+      'color': color.clear,
+      'parent': camera,
+      'y': -0.25,
+      'x': 0.1
+    });
+    after(0x2, function () {
+      destroy(tut7);
+      tutorialPop.play();
+      tut8 = new Text({
+        'text': "For example, this moving block.",
+        'color': color.clear,
+        'parent': camera,
+        'y': -0.25,
+        'x': 0.3
+      });
+      movingPlatformOne = Moving_Block(x = 0.3, y = 0.15, fromX = 0.3, toX = 0.5);
+      after(0x3, function () {
+        destroy(tut8);
+        tut9 = new Text({
+          'text': "That's enough about that.",
+          'color': color.clear,
+          'parent': camera,
+          'y': -0.25,
+          'x': 0.3
+        });
+        tutorialPop.play();
+        after(0x2, function () {
+          destroy(tut9);
+          tut9 = new Text({
+            'text': "Let's move onto the main game!",
+            'color': color.clear,
+            'parent': camera,
+            'y': -0.25,
+            'x': 0.3
+          });
+          after(0x2, function () {
+            TutorialFlagStuff();
+          });
+        });
+      });
+    });
+  });
+}
+function TutorialFlagStuff() {
+  currentLevel = 0x1;
+  localStorage.setItem("curentLevel", currentLevel);
+  if (!eVar) {
+    eVar = True;
+    destroy(tut9);
+    bg_music.pause();
+    bg_music.currentTime = 0x0;
+    complete.play();
+    after(0x3, function () {
+      bg_music.play();
+    });
+    TutorialComplete = new Button({
+      'scale': 0x3,
+      'color': color.black,
+      'text_color': "white",
+      'text': "Tutorial Completed!",
+      'z': -0x9
+    });
+    for (var _0x4cf1bf of collider_objects) {
+      destroy(_0x4cf1bf);
+    }
+    TutorialCompleteExist = True;
+    TutorialComplete.on_click = function () {
+      collider_objects = [];
+      moving_blocks = [];
+      level1();
+      destroy(movingPlatformOne);
+      destroy(TutorialComplete);
+    };
+  }
+}
+if (currentLevel === '0') {
+  intro_part_1 = new Button({
+    'scale': 0x3,
+    'color': color.black,
+    'text_color': "white",
+    'text': "Welcome to the GAME!\n\n click to continue (or press start on xbox)",
+    'z': -0xa
+  });
+  intro_part_1.on_click = function () {
+    intro_part_1.enabled = False;
+    set_fullscreen(True);
+    intro_part_2.enabled = True;
+  };
+  intro_part_2 = new Button({
+    'enabled': False,
+    'texture': "textures/the lads.png",
+    'scale': 0x2,
+    'color': color.black,
+    'text_color': 'white',
+    'text': "A game made by RangerRhino23 and Itsbailey X3525.",
+    'z': -0x9
+  });
+  intro_part_2.on_click = function () {
+    intro_part_2.enabled = False;
+    bg_music.play();
+    if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      MobileTutorial();
+    } else {
+      ComputerTutorial();
+    }
+  };
+}
+C1 = False;
+C2 = False;
+C3 = False;
+C4 = False;
+function input(_0x80c46) {
+  if (_0x80c46 === "space" || _0x80c46 === "gamepad a") {
+    JumpFunc();
+  }
+  if (_0x80c46 == "gamepad start") {
+    if (l1.enabled && !C1) {
+      l1.on_click = '';
+      C1 = True;
+      after(1.2, function () {
+        l1.enabled = False;
+        collider_objects = [];
+        moving_blocks = [];
+        level2();
+      });
+    } else {
+      if (l2.enabled && !C2) {
+        l2.on_click = '';
+        C2 = True;
+        after(1.2, function () {
+          l2.enabled = False;
+          collider_objects = [];
+          moving_blocks = [];
+          laserbeams = [];
+          level3();
+        });
+      } else {
+        if (l3.enabled && !C3) {
+          l3.on_click = '';
+          C3 = True;
+          after(1.2, function () {
+            l3.enabled = False;
+            collider_objects = [];
+            moving_blocks = [];
+            levelFinished();
+          });
+        } else if (TutorialCompleteExist) {
+          if (TutorialComplete.enabled && !C4) {
+            C4 = True;
+            after(1.2, function () {
+              TutorialComplete.enabled = False;
+              collider_objects = [];
+              moving_blocks = [];
+              level1();
+              destroy(movingPlatformOne);
+              destroy(TutorialComplete);
+            });
+          }
+        }
+      }
+    }
+    if (startGame.enabled) {
+      startGame.enabled = False;
+      bg_music.play();
+    }
+    try {
+      if (intro_part_1.enabled) {
+        intro_part_1.enabled = False;
+        set_fullscreen(True);
+        intro_part_2.enabled = True;
+      }
+      if (intro_part_2.enabled) {
+        intro_part_2.enabled = False;
+        bg_music.play();
+        if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+          MobileTutorial();
+        } else {
+          ComputerTutorial();
+        }
+      }
+    } catch {
+      ;
+    }
+  }
+}
+l1 = new Button({
+  'scale': 0x3,
+  'color': color.black,
+  'text_color': "white",
+  'text': "Level 1 complete!\n\n click to continue (or press start on xbox)",
+  'z': -0x9
+});
+l1.enabled = False;
+l1.on_click = function () {
+  l1.on_click = '';
+  after(1.2, function () {
+    l1.enabled = False;
+    collider_objects = [];
+    moving_blocks = [];
+    level2();
+  });
+};
+l2 = new Button({
+  'scale': 0x3,
+  'color': color.black,
+  'text_color': 'white',
+  'text': "Level 2 complete!\n\n click to continue (or press start on xbox)",
+  'z': -0x9
+});
+l2.enabled = False;
+l2.on_click = function () {
+  l2.on_click = '';
+  after(1.2, function () {
+    l2.enabled = False;
+    collider_objects = [];
+    moving_blocks = [];
+    laserbeams = [];
+    level3();
+  });
+};
+l3 = new Button({
+  'scale': 0x3,
+  'color': color.black,
+  'text_color': "white",
+  'text': "Level 3 complete!\n\n click to continue (or press start on xbox)",
+  'z': -0x9
+});
+l3.enabled = False;
+l3.on_click = function () {
+  l3.on_click = '';
+  after(1.2, function () {
+    l3.enabled = False;
+    collider_objects = [];
+    moving_blocks = [];
+    levelFinished();
+  });
+};
+mobileMoveLeft = False;
+mobileMoveRight = False;
+function MobileControlsFunc() {
+  if (mobileMoveButton.y > -0.16) {
+    mobileMoveButton.y = -0.16;
+    JumpFunc();
+  }
+  if (mobileMoveButton.y < -0.3) {
+    mobileMoveButton.y = -0.3;
+  }
+  if (mobileMoveButton.x >= mobileMoveButtonLeft.x - 0.2) {
+    mobileMoveButton.x = mobileMoveButtonLeft.x - 0.2;
+  }
+  if (mobileMoveButton.x > -0.7) {
+    player.x += speed * deltaTime;
+    collidingLeft = False;
+    player.texture = textureHolder1.texture;
+  }
+  if (mobileMoveButton.x < -0.78) {
+    player.x -= speed * deltaTime;
+    collidingRight = False;
+    player.texture = textureHolder2.texture;
+  }
+  if (!mobileMoveButton.dragging) {
+    mobileMoveButton.x = -0.7;
+    mobileMoveButton.y = -0.3;
+  }
+}
+function MobileControls() {
+  new Entity({
+    'update': MobileControlsFunc,
+    'alpha': 0x0
+  });
+  mobileMoveButton = new Button({
+    'draggable': True,
+    'x': -0.7,
+    'y': -0.3,
+    'color': color.white,
+    'scale': 0.2
+  });
+  mobileMoveButtonLeft = new Entity({
+    'alpha': 0x0,
+    'x': -0.3,
+    'y': -0.3,
+    'scale': 0.01,
+    'parent': camera
+  });
+  mobileMoveButtonRight = new Entity({
+    'alpha': 0x0,
+    'x': -0.48,
+    'y': -0.3,
+    'scale': 0.01,
+    'parent': camera
+  });
+  mobileMoveButtonUp = new Entity({
+    'alpha': 0x0,
+    'x': -0.39,
+    'y': -0.18,
+    'scale': 0.01,
+    'parent': camera
+  });
+}
+print("Why you looking here");
+if (/Android/i.test(navigator.userAgent)) {
+  MobileControls();
+} else {
+  print("This device is ! supported for mobile controls.");
+  {
+    console.log("Device: " + navigator.userAgent);
+  }
+}
+
+</script><script src="taptapir/sunsnake_compiler.js"></script></html>

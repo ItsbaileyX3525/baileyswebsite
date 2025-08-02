@@ -1,1 +1,0 @@
-import"./nav-CmqztrHi.js";function i(s,a){s&&a&&(s.classList.contains("max-h-0")?(s.classList.remove("max-h-0"),s.classList.add("max-h-40"),a.innerText="↑"):(s.classList.remove("max-h-40"),s.classList.add("max-h-0"),a.innerText="↓"))}window.toggleReveal=i;
