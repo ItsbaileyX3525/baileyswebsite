@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
+@font-face{
+  font-family: firaCode;
+  src: url('FiraCode-Regular.woff2')
+}
 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

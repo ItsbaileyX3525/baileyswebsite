@@ -16,3 +16,5 @@ Anyways, I hope you find my website acceptable. It won't be amazing as im learni
  - Flexbox froggy
  - [Tailwind CSS v4 Full Course 2025](https://www.youtube.com/watch?v=6biMWgD6_JY)
  - [The Copycat Streak Begins! | Episode 1](https://www.youtube.com/watch?v=yvuJkpx0P5Y) (to relax)
+ - [Learn Flexbox CSS in 8 minutes](https://www.youtube.com/watch?v=phWxA89Dy94)
+ - [For every JS/TS question I had](https://developer.mozilla.org/en-US/)
