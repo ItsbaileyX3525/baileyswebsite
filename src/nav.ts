@@ -1,7 +1,7 @@
 const homeButton: HTMLElement | null = document.getElementById('home-button');
 const gamesButton: HTMLElement | null = document.getElementById('games-button');
 const portfolioButton: HTMLElement | null = document.getElementById('portfolio-button');
-
+const flikhostButton: HTMLElement | null = document.getElementById('flikhost-button');
 
 homeButton?.addEventListener('click', () => {
   window.location.href = "/"
@@ -14,4 +14,9 @@ gamesButton?.addEventListener('click', () => {
 
 portfolioButton?.addEventListener('click', () => {
   window.location.href = "/portfolio"
+})
+
+
+flikhostButton?.addEventListener('click', () => {
+  window.location.href = "/flikhost"
 })

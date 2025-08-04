@@ -9,7 +9,9 @@ export default defineConfig({
 			input: {
 				main: './index.html',
 				games: './games.html',
-				portfolio: './portfolio.html'
+				portfolio: './portfolio.html',
+				flikhost: "./flikhost.html",
+				notfound: "./404.html"
 			}
 		}
 	}

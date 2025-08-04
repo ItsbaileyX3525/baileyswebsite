@@ -148,7 +148,7 @@ nextLanguageButton?.addEventListener('click', () => {
     onCurrentLanguage = 0
   }
   if (languageImage) {
-    languageImage.src = "assets/baileyLanguage/" + languageImages[onCurrentLanguage]
+    languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
   }
   if(languageFooter){
     languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
