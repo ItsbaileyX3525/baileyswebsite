@@ -1,53 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-screen">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="src/style.css">
     <title>Portfolio</title>
 </head>
-<body class="relative font-[firaCode] h-screen w-screen select-none">
-    <div class="grid grid-cols-[minmax(100px,_auto)_1fr] h-full w-full">
+<body class="bg-[#0c0c0c] relative font-[firaCode] h-screen w-screen select-none">
+    <div class="flex h-full w-full">
     <!--Left side-->
-        <div class="h-full w-max">
-            <div class="bg-[#202020] flex flex-col justify-end items-start h-1/2">
-                <div class="pl-3 text-2xl">
-                    <p id="path" class="cursor-pointer" onclick="changeDir('', true)">
-                        ./
-                    </p>
-                </div>
-            </div>
-            <div id="currentDir" class="bg-[#202020] flex flex-col justify-center items-start">
-                <span class="pl-12 mt-3 text-4xl">
-                <p class="cursor-pointer" onclick="changeDir('Downloads')">Downloads/</p>
-                </span>
-                <span class="pl-12 mt-3 text-4xl">
-                    <p class="cursor-pointer">Images/</p>
-                </span>
-                <span class="pl-12 mt-3 text-4xl">
-                    <p class="cursor-pointer">AboutMe.txt</p>
-                </span>
-                <span class="pl-12 mt-3 text-4xl">
-                    <p onclick="alert('Hello')" class="cursor-pointer">README.md</p>
-                </span>
+        <div class="mt-auto mb-auto pl-3 text-2xl max-w-2/3">
+            <p id="path" class="cursor-pointer" onclick="changeDir('', true)">
+                ./
+            </p>
+            <div id="currentDir" class="flex flex-col justify-center items-start">
             </div>
         </div>
-        <!--Right side-->
-        <div class="h-full w-full expa">
-            <div class="bg-[#0c0c0c] flex justify-start items-center h-full">
-                <img class="h-[35%]" src="/assets/portfolio/Arch.png">
-                <div class="flex-col">
-                    <p class="text-[#0dcdcd]">baile@baile</p>
-                    <p>- - - - - -</p>
-                    <p><data class="text-[#0dcdcd]">OS</data>: Arch Linux x86_64</p>
-                    <p><data class="text-[#0dcdcd]">CPU</data>: i5-12400F (12) @ 5.60 GHz</p>
-                    <p><data class="text-[#0dcdcd]">GPU</data>: NVIDIA GeForce RTX 3060</p>
-                    <p><data class="text-[#0dcdcd]">Disk</data>: (/): 916 GiB</p>
-                    <p><data class="text-[#0dcdcd]">Disk</data>: (/mnt/games): 3.1 TiB</p>
-                    <p><data class="text-[#0dcdcd]">Memory</data>: 31.06 GiB</p>
-                </div>
-            </div>
+    <!--Right side-->
+    <div id="consoleContents" class="flex pl-10 justify-center items-center h-full w-full flex-wrap overflow-auto">
+        <img class="h-[35%]" src="/assets/portfolio/Arch.png">
+        <div class="flex flex-col">
+            <p class="text-[#0dcdcd]">baile@baile</p>
+            <p>- - - - - -</p>
+            <p><data class="text-[rgb(13,205,205)]">OS</data>: Arch Linux x86_64</p>
+            <p><data class="text-[rgb(13,205,205)]">HOST</data>: B760 Pro RS/D4</p>
+            <p><data class="text-[rgb(13,205,205)]">KRNL</data>: Linux 6.15.7-arch1-1</p>
+            <p><data class="text-[#0dcdcd]">CPU</data>: i5-12400F (12) @ 5.60 GHz</p>
+            <p><data class="text-[#0dcdcd]">GPU</data>: NVIDIA GeForce RTX 3060</p>
+            <p><data class="text-[#0dcdcd]">Disk</data>: (/): 916 GiB</p>
+            <p><data class="text-[#0dcdcd]">Disk</data>: (/mnt/games): 3.1 TiB</p>
+            <p><data class="text-[#0dcdcd]">Memory</data>: 31.06 GiB</p>
         </div>
+    </div>
 </div>
 
     <!-- Just in case I need it again
