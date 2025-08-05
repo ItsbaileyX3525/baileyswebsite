@@ -1,10 +1,8 @@
-let darkMode: boolean = false;
-
-const darkModeToggle: HTMLElement | null = document.getElementById('dark-mode-toggle');
-
 const adventureImage = document.getElementById("adventure-image") as HTMLImageElement | null;
 const gameImage = document.getElementById("game-image") as HTMLImageElement | null;
 const languageImage = document.getElementById("language-image") as HTMLImageElement | null;
+const updates: HTMLElement | null = document.getElementById('updates')
+const closeUpdates = document.getElementById('close-updates') as HTMLButtonElement | null;
 
 const previousAdventureButton: HTMLElement | null = document.getElementById('prev-adventure-button');
 const nextAdventureButton: HTMLElement | null = document.getElementById('next-adventure-button');
@@ -68,90 +66,107 @@ let adventureFooterText: string[] = [
   "An image of a king in the krakow saltmines... I have no idea what it means."
 ]
 
-function toggleDarkMode() {
-  darkMode = !darkMode;
-  alert("haha, dark mode doesn't exist because dark mode is default") //Should I make a dark mode?
-}
+document.addEventListener("DOMContentLoaded", () => {
+  if (previousAdventureButton && nextAdventureButton){
+    previousAdventureButton.addEventListener('click', () => {
+      onCurrentAdventure--
+      if (onCurrentAdventure === -1){
+        onCurrentAdventure = adventureImages.length - 1
+      }
+      if (adventureImage) {
+        adventureImage.src = "assets/index/baileyAdventure/" + adventureImages[onCurrentAdventure]
+      }
+      if(AdventureFooter){
+        AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
+      }
+    })
 
-darkModeToggle?.addEventListener('click', toggleDarkMode);
+    nextAdventureButton.addEventListener('click', () => {
+      onCurrentAdventure++
+      if (onCurrentAdventure >= adventureImages.length){
+        onCurrentAdventure = 0
+      }
+      if (adventureImage) {
+        adventureImage.src = "assets/index/baileyAdventure/" + adventureImages[onCurrentAdventure]
+      }
+      if(AdventureFooter){
+        AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
+      }
+    })
+  }
 
-//Screw dom loaded <--- nvm typescript chillin with no dom loading
+  if (previousGameButton && nextGameButton){
+    previousGameButton.addEventListener('click', () => {
+      onCurrentGame--
+      if (onCurrentGame === -1){
+        onCurrentGame = gameImages.length - 1
+      }
+      if (gameImage) {
+        gameImage.src = "assets/index/baileyGames/" + gameImages[onCurrentGame]
+      }
+      if(gameFooter){
+        gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
+      }
+    })
 
-previousAdventureButton?.addEventListener('click', () => {
-  onCurrentAdventure--
-  if (onCurrentAdventure === -1){
-    onCurrentAdventure = adventureImages.length - 1
+    nextGameButton.addEventListener('click', () => {
+      onCurrentGame++
+      if (onCurrentGame >= gameImages.length){
+        onCurrentGame = 0
+      }
+      if (gameImage) {
+        gameImage.src = "assets/index/baileyGames/" + gameImages[onCurrentGame]
+      }
+      if(gameFooter){
+        gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
+      }
+    })
   }
-  if (adventureImage) {
-    adventureImage.src = "assets/index/baileyAdventure/" + adventureImages[onCurrentAdventure]
-  }
-  if(AdventureFooter){
-    AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
-  }
-})
 
-nextAdventureButton?.addEventListener('click', () => {
-  onCurrentAdventure++
-  if (onCurrentAdventure >= adventureImages.length){
-    onCurrentAdventure = 0
-  }
-  if (adventureImage) {
-    adventureImage.src = "assets/index/baileyAdventure/" + adventureImages[onCurrentAdventure]
-  }
-  if(AdventureFooter){
-    AdventureFooter.innerText = adventureFooterText[onCurrentAdventure]
-  }
-})
+  if (previousLanguageButton && nextLanguageButton){
+    previousLanguageButton.addEventListener('click', () => {
+      onCurrentLanguage--
+      if (onCurrentLanguage === -1){
+        onCurrentLanguage = languageImages.length - 1
+      }
+      if (languageImage) {
+        languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
+      }
+      if(languageFooter){
+        languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
+      }
+    })
 
-previousGameButton?.addEventListener('click', () => {
-  onCurrentGame--
-  if (onCurrentGame === -1){
-    onCurrentGame = gameImages.length - 1
+    nextLanguageButton.addEventListener('click', () => {
+      onCurrentLanguage++
+      if (onCurrentLanguage >= languageImages.length){
+        onCurrentLanguage = 0
+      }
+      if (languageImage) {
+        languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
+      }
+      if(languageFooter){
+        languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
+      }
+    })
   }
-  if (gameImage) {
-    gameImage.src = "assets/index/baileyGames/" + gameImages[onCurrentGame]
-  }
-  if(gameFooter){
-    gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
-  }
-})
 
-nextGameButton?.addEventListener('click', () => {
-  onCurrentGame++
-  if (onCurrentGame >= gameImages.length){
-    onCurrentGame = 0
+  if (closeUpdates){
+    closeUpdates.addEventListener('click', () => {
+      if (updates){
+        updates.classList.remove("fixed")
+        updates.classList.add("hidden")
+        localStorage.setItem("ship1", "false")
+      }
+    })
   }
-  if (gameImage) {
-    gameImage.src = "assets/index/baileyGames/" + gameImages[onCurrentGame]
-  }
-  if(gameFooter){
-    gameFooter.innerHTML = "<p>" + gameFooterText[onCurrentGame] + "</p>"
-  }
-})
-
-previousLanguageButton?.addEventListener('click', () => {
-  onCurrentLanguage--
-  if (onCurrentLanguage === -1){
-    onCurrentLanguage = languageImages.length - 1
-  }
-  if (languageImage) {
-    languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
-  }
-  if(languageFooter){
-    languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
-  }
-})
-
-nextLanguageButton?.addEventListener('click', () => {
-  onCurrentLanguage++
-  if (onCurrentLanguage >= languageImages.length){
-    onCurrentLanguage = 0
-  }
-  if (languageImage) {
-    languageImage.src = "assets/index/baileyLanguage/" + languageImages[onCurrentLanguage]
-  }
-  if(languageFooter){
-    languageFooter.innerHTML = "<p>" + languageFooterText[onCurrentLanguage] + "</p>"
+  
+  if (localStorage.getItem("ship1") == "true"){
+    //User comes from the first ship
+    if (updates){
+      updates.classList.remove("hidden")
+      updates.classList.add("fixed")
+    }
   }
 })
 

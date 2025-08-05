@@ -4,20 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="src/style.css">
-  <link rel="preload" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/youtube-white.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/discord-white.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/github-white.svg" type="image/svg+xml"/>
   <title>Game section</title>
 </head>
 <body>
-  <div class="grid grid-cols-4 gap-2 text-center bg-blue-300 pb-0.5">
+  <div class="grid grid-cols-4 gap-2 text-center bg-blue-300 pb-0.5 rounded-b-2xl">
     <div id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Home</div>
     <div id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Games</div>
     <div id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
     <div id="flikhost-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Flikhost</div>
+  </div>
+  <div class="absolute top-12 right-3" id="music-player">
+    <img id="music-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/speaker_disabled.svg" alt="">
+    <audio id="song" src="/assets/DanTDM - spacedog.mp3" autoplay></audio>
   </div>
   <h1 class="text-center mt-2 text-3xl">
     Welcome to the games page!</h1>
@@ -63,12 +67,13 @@
         <p id="arrow-sus" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-sus'),getElementById('arrow-sus'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/susclicker/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <!--Redirects to index.html because cba with setting up vite properly-->
+        <h3 onclick="window.location.href='/games/susclicker/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             Try it now!
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">They call me blocky!</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">They call me blocky!</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/They call me blocky.png" alt="They call me blocky image">
         <p class="bg-gray-900">
             My first game that attempts to tell a story through gameplay, it took me 50 hours to make and I hope you enjoy it!
@@ -86,12 +91,12 @@
         <p id="arrow-blocky" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-blocky'),getElementById('arrow-blocky'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/theycallmeblocky/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/theycallmeblocky/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             Give it a shot!
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Leland and the slug</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Leland and the slug</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Leland and the slug.png" alt="Leland and the slug image">
         <p class="bg-gray-900">
             A game I made for college, a joke game at that, it is very bad but kinda funny ig
@@ -115,12 +120,12 @@
         <p id="arrow-leland" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-leland'),getElementById('arrow-leland'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/lelandandtheslug/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/lelandandtheslug/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             See what happens?
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Platformer 2.0</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Platformer 2.0</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Platformer2.png" alt="Platformer2 image">
         <p class="bg-gray-900">
             The first game I made in the godot engine, platformer 2.0. A follow up to one of my previous games about platforming.
@@ -144,12 +149,12 @@
         <p id="arrow-platformer" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-platformer'),getElementById('arrow-platformer'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/lelandandtheslug/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/lelandandtheslug/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             Enjoy it now!
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">BDDARQ</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">BDDARQ</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/FORCE LOAD THE NO IMAGE IMAGE SO THERE IS AN IMAGE ON THIS IMAGELESS IMAGEFUL IMAGE.png" alt="Platformer2 image"> 
         <!--No-one will even see the src because when it fails to load the noimage.jpg replaces it.-->
         <p class="bg-gray-900">
@@ -170,12 +175,12 @@
         <p id="arrow-bdd" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-bdd'),getElementById('arrow-bdd'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='https://itsbaileyx3525.itch.io/bddarq'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='https://itsbaileyx3525.itch.io/bddarq'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             You can't play this one.
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Into the abyss</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Into the abyss</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Into the abyss.png" alt="Platformer2 image"> 
         <p class="bg-gray-900">
             You wont believe this but Into the abyss was another game I made for my college course.
@@ -191,12 +196,12 @@
         <p id="arrow-abyss" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-abyss'),getElementById('arrow-abyss'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/intotheabyss/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/intotheabyss/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             Don't play this.
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Terrance the toad</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Terrance the toad</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Terrance the toad.png" alt="Platformer2 image"> 
         <p class="bg-gray-900">
             we had 3 months to develop the game and we had 3 people helping create the game in total.
@@ -218,7 +223,7 @@
         <p id="arrow-toad" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-toad'),getElementById('arrow-toad'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/Terrance the toad.zip'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/Terrance the toad.zip'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             Zip file, .exe
         </h3>
     </div>
@@ -231,7 +236,7 @@
   </h2>
   <div class="grid grid-cols-4 gap-1 text-center center mt-4 wrap-break-word">
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Platformer 1.0</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Platformer 1.0</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Platformer1.png" alt="sus clicker image">
         <p class="bg-gray-900">
             Platformer 1.0, mine and <a class="text-[#ff8c69]" href="https://ranger.baileygamesand.codes/Home">RangerRhino23's</a> first game using the taptapir engine
@@ -263,12 +268,12 @@
         <p id="arrow-plat" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-plat'),getElementById('arrow-plat'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/platformer1/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/platformer1/index.html'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
             Play me! (Seriously)
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Cursor battles</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Cursor battles</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Cursor battles.jpg" alt="Cursor battles image">
         <p class="bg-gray-900">
             Cursor battles was a game that wanted to be made by my good friend <a class="text-[#ff8c69]" target="_blank" href="https://dn720702.ca.archive.org/0/items/3yg-77t-k-3/3yg77tK3.ia.mp4">Philton.</a>
@@ -297,7 +302,7 @@
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Nextbots</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Nextbots</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Nextbots.png" alt="Cursor battles image">
         <p class="bg-gray-900">
             Nextbots is the first ever game I ever created (Excl. Scratch) like ever ever.
@@ -319,12 +324,12 @@
         <p id="arrow-nextbot" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-nextbot'),getElementById('arrow-nextbot'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/Nextbots.7z'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/Nextbots.7z'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
            7z file, .py
         </h3>
     </div>
     <div>
-        <h3 class="border-b-2 border-black bg-gray-800">Amogus clicker</h3>
+        <h3 class="border-b-2 border-black bg-gray-800 rounded-t-xl">Amogus clicker</h3>
         <img class="pb-2 bg-gray-900 max-h-fit w-full" src="/assets/games/Amogus clicker.png" alt="Amogus clicker image">
         <p class="bg-gray-900">
             The original sus clicker that started all the sus clicker shenanigans.
@@ -347,7 +352,7 @@
         <p id="arrow-susori" class="self-center text-center bg-gray-900 cursor-pointer" onclick="toggleReveal(getElementById('bonus-content-susori'),getElementById('arrow-susori'))">
             ↓
         </p>
-        <h3 onclick="window.location.href='/games/amogus-clicker.zip'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer">
+        <h3 onclick="window.location.href='/games/amogus-clicker.zip'" class="bg-gray-900 border-t-2 border-black text-xl text-[#ff8c69] hover:text-[22px] cursor-pointer rounded-b-md">
            zip file, .py
         </h3>
     </div>
@@ -361,4 +366,5 @@
 </body>
 <script type="module" src="src/games.ts"></script>
 <script type="module" src="src/nav.ts"></script>
+<script type="module" src="src/music.ts"></script>
 </html>

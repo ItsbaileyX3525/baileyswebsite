@@ -4,20 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="src/style.css">
-  <link rel="preload" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/youtube-white.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/discord-white.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/github-white.svg" type="image/svg+xml"/>
   <title>Awesome index</title>
 </head>
 <body>
-  <div class="grid grid-cols-4 gap-2 text-center bg-blue-300 pb-0.5">
+  <div class="grid grid-cols-4 gap-2 text-center bg-blue-300 pb-0.5 rounded-b-2xl">
     <div id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Home</div>
     <div id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Games</div>
     <div id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
     <div id="flikhost-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Flikhost</div>
+  </div>
+  <div class="absolute top-12 right-3" id="music-player">
+    <img id="music-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/speaker_disabled.svg" alt="">
+    <audio id="song" src="/assets/DanTDM - spacedog.mp3" autoplay></audio>
   </div>
   <div class="flex justify-start ">
     <div class="ml-3 mt-3 ">
@@ -27,12 +31,9 @@
       <p class="ml-[36px] mt-10 font-bold">Bailey Miles</p>
       <p class="ml-[36px] mt-3 w-auto max-w-2xl">Hello! My name is Bailey, I have a passion for creating apps, games and websites! My main goal in life isn't to have a million pounds or know everyone on earth but rather to enjoy life. I love my life and I don't want it to ever end, so I will explore and learn as much as I can before my time comes.</p>
     </div>
-      <div id="dark-mode-toggle" class="text-center min-w-30 w-50 mt-3 bg-violet-400 p-2 rounded-2xl cursor-pointer hover:text-[17px] active:text-[14px] select-none self-start ml-auto">
-      Toggle Dark Mode
-    </div>
   </div>
   <div class="grid grid-cols-3 text-center m-auto mt-20 gap-10 max-w-6xl">
-    <div id="info-box-1" class="bg-violet-400">
+    <div id="info-box-1" class="bg-violet-400 rounded-md">
       <p>Languages</p>
  <div class="grid grid-cols-[auto_1fr_auto] items-center text-center">
           <div id="prev-language-button" class="mr-2 ml-1 cursor-pointer select-none">&lt;</div>
@@ -41,7 +42,7 @@
         </div>
         <p id="language-footer">Python is the very first language that I wrote in, back in 2020 when I started getting serious about coding!</p>
     </div>
-    <div id="info-box-2" class="bg-violet-400">
+    <div id="info-box-2" class="bg-violet-400 rounded-md">
       <p>Games</p>
 <div class="grid grid-cols-[auto_1fr_auto] items-center text-center">
           <div id="prev-game-button" class="mr-2 ml-1 cursor-pointer select-none">&lt;</div>
@@ -50,7 +51,7 @@
         </div>
         <p id="game-footer">Sus clicker, this game is my pride and joy, I've been making it for years! <a class='text-[#ff8c69]' href='https://itsbaileyx3525.itch.io/sus-clicker-remastered' target='_blank'>Check it out here!</a></p>
     </div>
-    <div id="info-box-3" class="bg-violet-400 h-auto">
+    <div id="info-box-3" class="bg-violet-400 h-auto rounded-md">
       <p class="border-b-black">Adventures</p>
         <div class="grid grid-cols-[auto_1fr_auto] items-center text-center">
           <div id="prev-adventure-button" class="mr-2 ml-1 cursor-pointer select-none">&lt;</div>
@@ -60,11 +61,11 @@
         <p id="adventure-footer">Bailey outside (shock) walking down the pier at the local beach</p>
     </div>
   </div>
-  <div class="flex bg-gray-700 mt-3 justify-center border-b-[.5px] border-black">
+  <div class="flex bg-gray-700 mt-3 justify-center rounded-tl-2xl rounded-tr-2xl border-b-[.5px] border-black">
     <h2 class="text-2xl">FAQ</h2>
   </div>
     <div class="grid grid-cols-4 text-center">
-      <div id="FAQ1" class="bg-gray-700 border-[1.5px] border-black">
+      <div id="FAQ1" class="bg-gray-700 border-[1.5px] rounded-bl-2xl border-black">
         <p class="text-xl text-green-400">
           Why do my other websites look better?
         </p>
@@ -101,7 +102,7 @@
           Life is heck.
         </p>
       </div>
-      <div id="FAQ4" class="bg-gray-700 border-[1.5px] border-black">
+      <div id="FAQ4" class="bg-gray-700 border-[1.5px] rounded-br-2xl border-black">
         <p class="text-xl text-green-400">
           Any asperations?
         </p>
@@ -118,7 +119,34 @@
       <a href="https://discordapp.com/users/696709694391320696" target="_blank"><img class="discord-icon h-8 w-8" src="assets/index/icons/discord-white.svg" alt="youtube icon"></a>
     </div>
       <p class="bg-gray-800 text-center">© Copyright Your Website Name. Bet you thought AI had wrote that then.</p>
-  </body>
+  <div id="updates" class="hidden bg-gray-700 w-4/5 h-4/5 top-3 left-1/2 transform-[translateX(-50%)] rounded-2xl">
+      <div class="flex flex-col items-center">
+        <button id="close-updates" class="self-end mr-2 bg-gray-800 mt-3 px-3 py-1 cursor-pointer text-red-600 rounded-md hover:-translate-y-0.5 active:translate-y-0.5">X</button>
+        <p class="text-3xl">Hello from ship 1!</p>
+        <p class="text-xl">Let me give you a run down of what has changed since ship 1!</p>
+        <p class="text-2xl mt-3">Main changes:</p>
+        <ul class="self-start ml-20 mt-2 text-xl">
+          <li>&bull; Added the flikhost page</li>
+          <ul class="ml-10">
+            <li>&bull; Creating image uploading</li>
+            <li>&bull; Teaches about <a class="text-[#be6d2a]" href="https://flik.host">flik.host</a></li>
+            <li>&bull; Learnt some cool new tailwind features!</li>
+          </ul>
+          <li>&bull; Added a 404 page - Thx Harry</li>
+          <li>&bull; Amount of fun I've had creating this +1000%</li>
+        </ul>
+        <p class="text-2xl mt-8">Misc:</p>
+        <ul class="self-start ml-20 mt-2 text-xl">
+          <li>&bull; Fixed some images not showing on the index page</li>
+          <li>&bull; Styled up the site a bit more.</li>
+          <li>&bull; Removed the dark mode toggle.</li>
+          <li>&bull; Added this update screen thing.</li>
+          <li>&bull; Tidied up some a lot of the code.</li>
+        </ul>
+      </div>
+  </div>
+</body>
 <script type="module" src="src/main.ts"></script>
 <script type="module" src="src/nav.ts"></script>
+<script type="module" src="src/music.ts"></script>
 </html> 
