@@ -13,9 +13,11 @@ Anyways, I hope you find my website acceptable. It won't be amazing as im learni
 
 ### Resources (in order I learnt them):
 
- - Flexbox froggy
+ - [Flexbox froggy](https://flexboxfroggy.com/)
  - [Tailwind CSS v4 Full Course 2025](https://www.youtube.com/watch?v=6biMWgD6_JY)
  - [The Copycat Streak Begins! | Episode 1](https://www.youtube.com/watch?v=yvuJkpx0P5Y) (to relax)
  - [Learn Flexbox CSS in 8 minutes](https://www.youtube.com/watch?v=phWxA89Dy94)
  - [For every JS/TS question I had](https://developer.mozilla.org/en-US/)
  - [Learn HTML forms in 10+ minutes! 📝](https://www.youtube.com/watch?v=zIN54lhJtQU)
+ - [What is a single page application? SPA](https://www.youtube.com/watch?v=eIxDHgzGCnY&t=205s)
+ - [Creating an SPA Router in Vanilla JS](https://www.youtube.com/watch?v=ZleShIpv5zQ), had to convert to TS but it was easy
