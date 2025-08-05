@@ -1,0 +1,1 @@
+const t=document.getElementById("home-button"),o=document.getElementById("games-button"),e=document.getElementById("portfolio-button");t?.addEventListener("click",()=>{window.location.href="/"});o?.addEventListener("click",()=>{window.location.href="/games"});e?.addEventListener("click",()=>{window.location.href="/portfolio"});
