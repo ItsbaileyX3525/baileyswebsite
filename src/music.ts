@@ -1,26 +1,37 @@
-const musicPlayer: HTMLElement | null = document.getElementById('music-player');
-const musicImage = document.getElementById('music-image') as HTMLImageElement | null;
-const song = document.getElementById('song') as HTMLAudioElement | null
+let musicPlayer: HTMLElement | null = document.getElementById('music-player');
+let musicImage = document.getElementById('music-image') as HTMLImageElement | null;
+let song = document.getElementById('song') as HTMLAudioElement | null
 let songPlaying: boolean = false;
 
-
-document.addEventListener("DOMContentLoaded", () => {
-    if (musicImage && musicPlayer && song){
-        if (!song.paused){
-            //Song autoplayed
-            songPlaying = true;
+export function reloadReferences(): void{
+    musicPlayer = document.getElementById('music-player') as HTMLElement | null;
+    musicImage = document.getElementById('music-image') as HTMLImageElement | null;
+    if (!song?.paused){
+        //Song autoplayed
+        songPlaying = true;
+        if (musicImage) {
             musicImage.src = "/assets/speaker_enabled.svg";
         }
-        
+    }
+    if (musicPlayer) {
         musicPlayer.addEventListener("click", () => {
             if (songPlaying) {
-                musicImage.src = "/assets/speaker_disabled.svg";
-                song.pause()
-            }else{
-                musicImage.src = "/assets/speaker_enabled.svg";
-                song.play()
+                if (musicImage) {
+                    musicImage.src = "/assets/speaker_disabled.svg";
+                }
+                if (song) {
+                    song.pause();
+                }
+            } else {
+                if (musicImage) {
+                    musicImage.src = "/assets/speaker_enabled.svg";
+                }
+                if (song) {
+                    song.play();
+                }
             }
             songPlaying = !songPlaying;
-        })
+        });
     }
-})
+
+}

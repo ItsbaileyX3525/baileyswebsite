@@ -1,20 +1,59 @@
-const adventureImage = document.getElementById("adventure-image") as HTMLImageElement | null;
-const gameImage = document.getElementById("game-image") as HTMLImageElement | null;
-const languageImage = document.getElementById("language-image") as HTMLImageElement | null;
-const updates: HTMLElement | null = document.getElementById('updates')
-const closeUpdates = document.getElementById('close-updates') as HTMLButtonElement | null;
+import { reloadReferences } from "./music"
+import { reloadReferencesFlikhost } from "./flikhost"
 
-const previousAdventureButton: HTMLElement | null = document.getElementById('prev-adventure-button');
-const nextAdventureButton: HTMLElement | null = document.getElementById('next-adventure-button');
-const AdventureFooter: HTMLElement | null = document.getElementById("adventure-footer")
+const routes: Record<string, string> = {
+	"/": "home",
+	"/games": "games",
+	"/flikhost": "flikhost",
+};
 
-const previousGameButton: HTMLElement | null = document.getElementById('prev-game-button');
-const nextGameButton: HTMLElement | null = document.getElementById('next-game-button');
-const gameFooter: HTMLElement | null = document.getElementById("game-footer")
+async function render(path: string) {
+	const app = document.getElementById("app");
+	if (!app) return;
 
-const previousLanguageButton: HTMLElement | null = document.getElementById('prev-language-button');
-const nextLanguageButton: HTMLElement | null = document.getElementById('next-language-button');
-const languageFooter: HTMLElement | null = document.getElementById("language-footer")
+	const page = routes[path]; 
+	if (!page) {
+		app.innerHTML = "<h1>404</h1><p>Page not found</p>";
+		return;
+	}
+
+	try {
+		const res = await fetch(`/${page}.html`);
+		if (!res.ok) throw new Error("Not found");
+		const html = await res.text();
+		app.innerHTML = html;
+    reloadReferences()
+    checkImage()
+    reloadReferencesFlikhost()
+    if (page==="home"){
+      addButtonClicks()
+    }
+	} catch {
+		const res = await fetch(`/404.html`);
+		if (!res.ok) throw new Error("Not found");
+		const html = await res.text();
+		app.innerHTML = html;
+	}
+}
+
+function navigate(path: string) {
+	history.pushState({}, "", path);
+	render(path);
+}
+
+window.addEventListener("popstate", () => render(location.pathname));
+
+document.addEventListener("DOMContentLoaded", () => {
+	document.body.addEventListener("click", (e) => {
+		const target = e.target as HTMLElement;
+		if (target.matches("div[data-link]")) {
+			e.preventDefault();
+			const href = target.getAttribute("href");
+			if (href) navigate(href);
+		}
+	});
+	render(location.pathname);
+});
 
 let onCurrentLanguage: number = 0
 let languageImages: string[] = [
@@ -66,7 +105,26 @@ let adventureFooterText: string[] = [
   "An image of a king in the krakow saltmines... I have no idea what it means."
 ]
 
-document.addEventListener("DOMContentLoaded", () => {
+function addButtonClicks(): void{
+  const adventureImage = document.getElementById("adventure-image") as HTMLImageElement | null;
+  const gameImage = document.getElementById("game-image") as HTMLImageElement | null;
+  const languageImage = document.getElementById("language-image") as HTMLImageElement | null;
+  const updates: HTMLElement | null = document.getElementById('updates')
+  const closeUpdates = document.getElementById('close-updates') as HTMLButtonElement | null;
+
+  const previousAdventureButton: HTMLElement | null = document.getElementById('prev-adventure-button');
+  const nextAdventureButton: HTMLElement | null = document.getElementById('next-adventure-button');
+  const AdventureFooter: HTMLElement | null = document.getElementById("adventure-footer")
+
+  const previousGameButton: HTMLElement | null = document.getElementById('prev-game-button');
+  const nextGameButton: HTMLElement | null = document.getElementById('next-game-button');
+  const gameFooter: HTMLElement | null = document.getElementById("game-footer")
+
+  const previousLanguageButton: HTMLElement | null = document.getElementById('prev-language-button');
+  const nextLanguageButton: HTMLElement | null = document.getElementById('next-language-button');
+  const languageFooter: HTMLElement | null = document.getElementById("language-footer")
+
+
   if (previousAdventureButton && nextAdventureButton){
     previousAdventureButton.addEventListener('click', () => {
       onCurrentAdventure--
@@ -168,16 +226,18 @@ document.addEventListener("DOMContentLoaded", () => {
       updates.classList.add("fixed")
     }
   }
-})
+}
 
-for (const e of document.querySelectorAll('img')) {
-	e.addEventListener('error', function(event) {
-		const target = event.target as HTMLImageElement;
-		target.src = 'NoImage.jpg';
-		target.onerror = null;
-	});
+function checkImage(): void{
+  for (const e of document.querySelectorAll('img')) {
+    e.addEventListener('error', function(event) {
+      const target = event.target as HTMLImageElement;
+      target.src = 'NoImage.jpg';
+      target.onerror = null;
+    });
 
-	if (e.complete && e.naturalWidth === 0) {
-		e.dispatchEvent(new Event('error'));
-	}
+    if (e.complete && e.naturalWidth === 0) {
+      e.dispatchEvent(new Event('error'));
+    }
+  }
 }

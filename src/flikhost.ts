@@ -1,8 +1,17 @@
-const uploadReport: HTMLElement | null = document.getElementById('file-report');
-const fileStatus: HTMLElement | null = document.getElementById('file-status');
-const imageElement = document.getElementById('image') as HTMLImageElement | null;
-const fileNameAnchor = document.getElementById('file-name') as HTMLAnchorElement | null
-const uploadText: HTMLElement | null = document.getElementById('hosted-text')
+let uploadReport: HTMLElement | null = document.getElementById('file-report');
+let fileStatus: HTMLElement | null = document.getElementById('file-status');
+let imageElement = document.getElementById('image') as HTMLImageElement | null;
+let fileNameAnchor = document.getElementById('file-name') as HTMLAnchorElement | null
+let uploadText: HTMLElement | null = document.getElementById('hosted-text')
+
+export function reloadReferencesFlikhost(): void {
+    uploadReport = document.getElementById('file-report') as HTMLElement | null;
+    fileStatus = document.getElementById('file-status') as HTMLElement | null;
+    imageElement = document.getElementById('image') as HTMLImageElement | null;
+    fileNameAnchor = document.getElementById('file-name') as HTMLAnchorElement | null
+    uploadText = document.getElementById('hosted-text') as HTMLElement | null
+
+}
 
 function uploadImage(event: Event, websiteName: string, apiKey: string): void {
     event.preventDefault();
@@ -65,18 +74,6 @@ function uploadImage(event: Event, websiteName: string, apiKey: string): void {
     .catch((error) => {
         console.log(error);
     });
-}
-
-for (const e of document.querySelectorAll('img')) {
-	e.addEventListener('error', function(event) {
-		const target = event.target as HTMLImageElement;
-		target.src = 'NoImage.jpg';
-		target.onerror = null;
-	});
-
-	if (e.complete && e.naturalWidth === 0) {
-		e.dispatchEvent(new Event('error'));
-	}
 }
 
 (window as any).uploadImage = uploadImage

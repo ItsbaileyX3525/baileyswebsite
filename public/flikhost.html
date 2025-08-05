@@ -1,29 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="src/style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="prefetch" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
-    <link rel="preload" as="image" href="/assets/index/icons/youtube-white.svg" type="image/svg+xml"/>
-    <link rel="prefetch" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
-    <link rel="preload" as="image" href="/assets/index/icons/discord-white.svg" type="image/svg+xml"/>
-    <link rel="prefetch" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
-    <link rel="preload" as="image" href="/assets/index/icons/github-white.svg" type="image/svg+xml"/>
-    <title>Flikhost</title>
-</head>
+
 <body>
-  <div class="grid grid-cols-4 gap-2 text-center bg-blue-300 pb-0.5 rounded-b-2xl">
-    <div id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Home</div>
-    <div id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Games</div>
-    <div id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
-    <div id="flikhost-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Flikhost</div>
-  </div>
   <div class="absolute top-12 right-3" id="music-player">
     <img id="music-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/speaker_disabled.svg" alt="">
-    <audio id="song" autoplay>
-        <source src="/assets/DanTDM - spacedog.mp3" type="audio/mpeg">
-    </audio>
   </div>
     <div class="flex flex-col justify-center items-center max-w-4xl mt-4 mx-auto px-4">
         <p class="text-4xl">What is <a class="text-[#6d54b5]" target="_blank" href="https://flik.host">flikhost?</a></p>
@@ -51,8 +29,4 @@
         </div>
         <p class="mt-4 text-2xl" id="hosted-text">This image is now hosted on the flikhost website that I created!</p>
     </div>
-</body>
-<script type="module" src="src/nav.ts"></script>
-<script type="module" src="src/flikhost.ts"></script>
-<script type="module" src="src/music.ts"></script>
-</html>
+
