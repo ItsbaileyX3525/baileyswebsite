@@ -10,18 +10,34 @@
   <link rel="preload" as="image" href="/assets/index/icons/discord-white.svg" type="image/svg+xml"/>
   <link rel="prefetch" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
   <link rel="preload" as="image" href="/assets/index/icons/github-white.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/shuffle.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/unshuffled.svg" type="image/svg+xml"/>
   <title>Bailey's website</title>
 </head>
 <body>
-  <div class="grid grid-cols-4 gap-2 text-center bg-blue-300 pb-0.5 rounded-b-2xl">
+  <div class="grid grid-cols-5 gap-2 text-center  pb-0.5 rounded-b-2xl">
     <div href="/" id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Home</div>
-    <div href="/games" id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Games</div>
+    <div href="/game" id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Games</div>
     <div href="/portfolio" id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
     <div href="/flikhost" id="flikhost-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Flikhost</div>
+    <div href="/stats" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Stats</div>
   </div>
-    <audio id="song" autoplay>
-        <source src="/assets/DanTDM - spacedog.mp3" type="audio/mpeg">
+  <div id="music-details" class="bg-gray-500 fixed left-1/2 transform-[translateX(-50%)] bottom-5  px-2 py-1 rounded-2xl text-black opacity-0 transition-opacity duration-1000 ease-in-out">
+    <p>Now playing: DanTDM - Spacedog</p>
+  </div>
+    <audio id="song">
+        <source id="song-source" src="/assets/DanTDM - Spacedog.mp3" type="audio/mpeg">
     </audio>
+    <div class="absolute top-12 right-3">
+        <div class="flex gap-3">
+            <div id="music-player">
+                <img id="music-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/speaker_disabled.svg" alt="">
+            </div>
+            <div id="music-player-shuffle">
+                <img id="shuffle-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/unshuffled.svg" alt="">
+            </div>
+        </div>
+    </div>
   <div id="app">
   </div>
 </body>
@@ -30,4 +46,5 @@
 <script type="module" src="src/games.ts"></script>
 <script type="module" src="src/flikhost.ts"></script>
 <script type="module" src="src/music.ts"></script>
+<script type="module" src="src/stats.ts"></script>
 </html> 

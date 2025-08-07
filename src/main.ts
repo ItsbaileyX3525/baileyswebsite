@@ -1,10 +1,13 @@
-import { reloadReferences } from "./music"
 import { reloadReferencesFlikhost } from "./flikhost"
+import { reloadReferencesStats } from "./stats";
+
+const cameFrom: string | null = localStorage.getItem("404")
 
 const routes: Record<string, string> = {
 	"/": "home",
-	"/games": "games",
+	"/game": "game",
 	"/flikhost": "flikhost",
+  "/stats" : "stats"
 };
 
 async function render(path: string) {
@@ -13,7 +16,10 @@ async function render(path: string) {
 
 	const page = routes[path]; 
 	if (!page) {
-		app.innerHTML = "<h1>404</h1><p>Page not found</p>";
+      const res = await fetch(`/404.html`);
+      if (!res.ok) throw new Error("Not found");
+      const html = await res.text();
+      app.innerHTML = html;
 		return;
 	}
 
@@ -22,9 +28,12 @@ async function render(path: string) {
 		if (!res.ok) throw new Error("Not found");
 		const html = await res.text();
 		app.innerHTML = html;
-    reloadReferences()
     checkImage()
     reloadReferencesFlikhost()
+    if (page === "stats"){
+      reloadReferencesStats()
+    }
+    
     if (page==="home"){
       addButtonClicks()
     }
@@ -41,7 +50,15 @@ function navigate(path: string) {
 	render(path);
 }
 
-window.addEventListener("popstate", () => render(location.pathname));
+if (cameFrom){
+  console.log(cameFrom)
+  render(cameFrom)
+  navigate(cameFrom)
+  localStorage.removeItem("404")
+} else{
+  window.addEventListener("popstate", () => render(location.pathname));
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
 	document.body.addEventListener("click", (e) => {

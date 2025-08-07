@@ -21,3 +21,5 @@ Anyways, I hope you find my website acceptable. It won't be amazing as im learni
  - [Learn HTML forms in 10+ minutes! 📝](https://www.youtube.com/watch?v=zIN54lhJtQU)
  - [What is a single page application? SPA](https://www.youtube.com/watch?v=eIxDHgzGCnY&t=205s)
  - [Creating an SPA Router in Vanilla JS](https://www.youtube.com/watch?v=ZleShIpv5zQ), had to convert to TS but it was easy
+ - [CSS Animation in 100 Seconds](https://www.youtube.com/watch?v=HZHHBwzmJLk) I find fireships 100s videos a good for a preliminary understanding.
+ - [Learn CSS Animations in 9 Minutes](https://www.youtube.com/watch?v=z2LQYsZhsFw)
