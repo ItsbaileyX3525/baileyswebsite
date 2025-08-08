@@ -1,76 +1,97 @@
-import { reloadReferencesFlikhost } from "./flikhost"
+import { reloadReferencesFlikhost } from "./flikhost";
 import { reloadReferencesStats } from "./stats";
-
-const cameFrom: string | null = localStorage.getItem("404")
+import { displaySongList } from "./music"
 
 const routes: Record<string, string> = {
 	"/": "home",
 	"/game": "game",
 	"/flikhost": "flikhost",
-  "/stats" : "stats"
+	"/stats": "stats",
+	"/music_player": "music_player"
 };
 
-async function render(path: string) {
+function load404(): void {
+	fetch("/404.html")
+		.then((res) => {
+			if (!res.ok) throw new Error("404 page not found");
+			return res.text();
+		})
+		.then((html) => {
+			const app = document.getElementById("app");
+			if (app) app.innerHTML = html;
+		})
+		.catch((err) => console.error("Failed to load 404:", err));
+}
+
+export async function render(path: string): Promise<void> {
 	const app = document.getElementById("app");
 	if (!app) return;
 
-	const page = routes[path]; 
+	const page = routes[path];
+
 	if (!page) {
-      const res = await fetch(`/404.html`);
-      if (!res.ok) throw new Error("Not found");
-      const html = await res.text();
-      app.innerHTML = html;
+		load404();
 		return;
 	}
 
 	try {
 		const res = await fetch(`/${page}.html`);
-		if (!res.ok) throw new Error("Not found");
+		if (!res.ok) throw new Error("Page not found");
 		const html = await res.text();
 		app.innerHTML = html;
-    checkImage()
-    reloadReferencesFlikhost()
-    if (page === "stats"){
-      reloadReferencesStats()
-    }
-    
-    if (page==="home"){
-      addButtonClicks()
-    }
-	} catch {
-		const res = await fetch(`/404.html`);
-		if (!res.ok) throw new Error("Not found");
-		const html = await res.text();
-		app.innerHTML = html;
+
+		switch (page) {
+			case "home":
+				addButtonClicks();
+				break;
+			case "flikhost":
+				reloadReferencesFlikhost();
+				break;
+			case "stats":
+				reloadReferencesStats();
+				break;
+			case "music_player":
+        displaySongList()
+				break;
+		}
+
+		checkImage();
+	} catch (err) {
+		console.error("Error rendering page:", err);
+		load404();
 	}
 }
 
-function navigate(path: string) {
+export function navigate(path: string): void {
 	history.pushState({}, "", path);
 	render(path);
 }
 
-if (cameFrom){
-  console.log(cameFrom)
-  render(cameFrom)
-  navigate(cameFrom)
-  localStorage.removeItem("404")
-} else{
-  window.addEventListener("popstate", () => render(location.pathname));
-}
-
-
 document.addEventListener("DOMContentLoaded", () => {
-	document.body.addEventListener("click", (e) => {
+	const cameFrom = localStorage.getItem("404");
+
+	if (cameFrom) {
+		navigate(cameFrom);
+		localStorage.removeItem("404");
+	} else {
+		render(location.pathname);
+	}
+
+	window.addEventListener("popstate", () => {
+		render(location.pathname);
+	});
+
+	document.body.addEventListener("click", (e: Event) => {
 		const target = e.target as HTMLElement;
 		if (target.matches("div[data-link]")) {
+      console.log(e)
 			e.preventDefault();
 			const href = target.getAttribute("href");
 			if (href) navigate(href);
 		}
 	});
-	render(location.pathname);
 });
+
 
 let onCurrentLanguage: number = 0
 let languageImages: string[] = [

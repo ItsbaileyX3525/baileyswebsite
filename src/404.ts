@@ -5,6 +5,7 @@ const validFilePath: string[] = [
     "/flikhost",
     "/game",
     "/stats",
+    "/music_player",
     "/404"
 ]
 
@@ -15,7 +16,7 @@ function checkValid() {
         } 
     }
 
-    if (window.location.pathname == "/portfolio") {//This shouldn't really happen ever...
+    if (window.location.pathname == "/portfolio") {
         window.location.href = "/portfolio.html"
         return
     }

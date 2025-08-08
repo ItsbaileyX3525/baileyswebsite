@@ -197,7 +197,6 @@ async function fetchWebsiteVersion(): Promise<string> {
     try {
         const res = await fetch("version.txt");
         const text = await res.text();
-        console.log(text);
         return text;
     } catch (e) {
         console.log(e);

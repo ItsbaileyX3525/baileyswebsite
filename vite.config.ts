@@ -59,6 +59,7 @@ export default defineConfig({
 				home: "./home.html",
 				stats: "./stats.html",
 				flikhost : "./flikhost.html",
+				music_player: "./music_player.html",
 				notfound: '/404.html'
 			}
 		}
