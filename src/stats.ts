@@ -6,6 +6,7 @@ let interval5: ReturnType<typeof setInterval>;
 let interval6: ReturnType<typeof setInterval>;
 let interval7: ReturnType<typeof setInterval>;
 let interval8: ReturnType<typeof setInterval>;
+let interval9: ReturnType<typeof setInterval>;
 
 let canExpose: boolean = true
 let areAllExposed: boolean = false
@@ -34,6 +35,13 @@ let steamPfp: string;
 let steamCreated: number;
 let steamLastOnline: number;
 let steamFallback: boolean = false;
+
+let spotifySongName: string;
+let spotifySongArtist: string;
+let spotifySongIcon: string;
+let spotifySongUrl: string;
+let spotifySongDuration: number;
+let spotifySongProgress: number;
 
 let currentComment: string | null = null;
 let currentCommentAuthor: string | null = null;
@@ -217,6 +225,50 @@ async function fetchSteamStats(): Promise<void> {
     }
 }
 
+function formatSpotify(time: number): string {
+    let seconds: number = Math.floor(time / 1000)
+
+    let minutes = Math.floor(seconds / 60)
+
+    seconds -= 60 * minutes
+
+    let finalString: string = `${minutes}m ${seconds}s`
+
+    return finalString;
+}
+
+async function getCurrentSong(): Promise<void> {
+    const response = await fetch('https://api.flik.host/spotify.php');
+    
+    const data = await response.json();
+
+	if (response.status === 204) {
+		return;
+	}
+
+	if (!response.ok) {
+		throw new Error(`Spotify API error: ${response.status} ${response.statusText}`);
+	}
+
+    if (data.track == undefined) {
+        spotifySongName = data.message
+        spotifySongDuration = 0
+        spotifySongProgress = 0
+        spotifySongArtist = ""
+    } else {
+        spotifySongArtist = data.track.artists[0]
+        spotifySongName = data.track.name
+        spotifySongIcon = data.track.image
+        spotifySongUrl = data.track.spotify_url
+        spotifySongProgress = data.progress_ms
+        spotifySongDuration = data.track.duration_ms
+    }
+
+
+
+	return;
+}
+
 async function fetchVisitors(): Promise<boolean> {
     try {
         const response = await fetch('https://api.flik.host/unique_site_visitiors.php?site=baileygamesand.codes');
@@ -377,6 +429,10 @@ export async function reloadReferencesStats(): Promise<void> {
     const connectionStat = document.getElementById('connection-stat') as HTMLElement | null;
     const websiteStat = document.getElementById('website-stat') as HTMLElement | null;
     const versionStat = document.getElementById('version-stat') as HTMLElement | null;
+    const spotifySongNameStat = document.getElementById('spotifyname-stat') as HTMLElement | null;
+    const spotifySongDurationStat = document.getElementById('spotifyduration-stat') as HTMLElement | null;
+    const spotifySongIconStat = document.getElementById('spotify-icon') as HTMLImageElement | null;
+    const spotifySongLink = document.getElementById('spotify-link') as HTMLAnchorElement | null;
 
     clearInterval(interval1)
     clearInterval(interval2)
@@ -386,6 +442,7 @@ export async function reloadReferencesStats(): Promise<void> {
     clearInterval(interval6)
     clearInterval(interval7)
     clearInterval(interval8)
+    clearInterval(interval9)
 
     // Time stat
 
@@ -578,6 +635,25 @@ export async function reloadReferencesStats(): Promise<void> {
                 connectionStat.innerText = "Offline"
             }
         }, 100)
+    }
+
+    // Spotify stats
+
+    await getCurrentSong()
+
+    if (spotifySongNameStat && spotifySongDurationStat && spotifySongIconStat && spotifySongLink) {
+        spotifySongNameStat.innerText = spotifySongName + " - " + spotifySongArtist
+        spotifySongDurationStat.innerText = formatSpotify(spotifySongProgress) + " / " + formatSpotify(spotifySongDuration)
+        spotifySongIconStat.src = spotifySongIcon
+        spotifySongLink.href = spotifySongUrl
+
+        interval9 = setInterval(async () => {
+            await getCurrentSong()
+            spotifySongNameStat.innerText = spotifySongName + " - " + spotifySongArtist
+            spotifySongDurationStat.innerText = formatSpotify(spotifySongProgress) + " / " + formatSpotify(spotifySongDuration)
+            spotifySongIconStat.src = spotifySongIcon
+            spotifySongLink.href = spotifySongUrl
+        }, 1000)
     }
 }
 

@@ -13,26 +13,38 @@
                 <p onclick="exposeStat('wrapper-time')" class="bg-gray-700 text-3xl border-black border-b-2 px-3 rounded-t-xl text-center cursor-pointer">Time-based stats</p>
                 <div id="wrapper-time" class="hidden" data-wrapper>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 px-3 pt-3 text-center">Time spent living</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="living-stat">1yr 1mth 1d 1hr 10m 23s</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="living-stat">Loading</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">With consciousness</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="alive-stat">1yr 1mth 1d 1hr 10m 23s</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="alive-stat">Loading</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Time since I started coding</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="coding-stat">1yr 1mth 1d 1hr 10m 23s</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="coding-stat">Loading</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Time website has been alive</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 rounded-b-xl px-2" id="website-stat">9d 2h 4m 2s</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 rounded-b-xl px-2" id="website-stat">Loading</p>
                 </div>
             </div>
             <div class="flex flex-col mt-4">
                 <p onclick="exposeStat('wrapper-increment')" class="bg-gray-700 text-3xl border-black border-b-2 px-3 rounded-t-xl text-center cursor-pointer">Incremental-based stats</p>
                 <div id="wrapper-increment" class="hidden" data-wrapper>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 px-3 pt-3 text-center">My breaths taken</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="breaths-stat">1yr 1mth 1d 1hr 10m 23s</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="breaths-stat">Loading</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Times your screen has refreshed</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="frame-stat">0 refreshes</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="frame-stat">Loading</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Unique vistors of this page</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="visitor-stat">0</p>                    
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="visitor-stat">Loading</p>                    
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Website version</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 rounded-b-xl px-2" id="version-stat">V1.0</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 rounded-b-xl px-2" id="version-stat">Loading</p>
+                </div>
+            </div>
+            <div class="flex flex-col mt-4">
+                <p onclick="exposeStat('wrapper-spotify')" class="bg-gray-700 text-3xl border-black border-b-2 px-3 rounded-t-xl text-center cursor-pointer">Spotify stats</p>
+                <div id="wrapper-spotify" class="hidden" data-wrapper>
+                    <p class="bg-gray-700 text-2xl border-black border-b-2 px-3 pt-3 text-center">Current listening to</p>
+                    <div class="flex bg-gray-700 justify-center items-center">
+                        <img class="max-h-10 max-w-10" id="spotify-icon" src="NoImage.jpg" alt="image of the spotify">
+                        <a href="/" target="_blank" id="spotify-link"><p class="text-xl text-center pt-2 pb-3 px-2" id="spotifyname-stat">Loading</p></a>
+                    </div>
+                    <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Current position</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="spotifyduration-stat">Loading</p>
                 </div>
             </div>
         </div>
@@ -64,9 +76,9 @@
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Your OS</p>
                     <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="OS-stat">Windows, probably</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">CPU threads you have</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="threads-stat">12 threads</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2" id="threads-stat">Loading</p>
                     <p class="bg-gray-700 text-2xl border-black border-b-2 border-t-2 pt-2 px-3 text-center">Connection status (changes)</p>
-                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2 rounded-b-2xl" id="connection-stat">Online</p>
+                    <p class="bg-gray-700 text-xl text-center pt-2 pb-3 px-2 rounded-b-2xl" id="connection-stat">Loading</p>
                 </div>
             </div>
         </div>

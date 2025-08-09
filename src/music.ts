@@ -393,9 +393,6 @@ export async function displaySongList() {
 
 		const name = file.name.replace(/\.[^/.]+$/, "");
 
-		console.log("Name:", name);
-		console.log("Blob:", blob);
-
 		await storeFile(name, blob);
 		await appendIndexedDBSongs();
 		displaySongList();

@@ -84,7 +84,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	document.body.addEventListener("click", (e: Event) => {
 		const target = e.target as HTMLElement;
 		if (target.matches("div[data-link]")) {
-      console.log(e)
 			e.preventDefault();
 			const href = target.getAttribute("href");
 			if (href) navigate(href);
