@@ -1,94 +1,131 @@
 import { reloadReferencesFlikhost } from "./flikhost";
-import { reloadReferencesStats } from "./stats";
+import { reloadReferencesStats, removeIntervals } from "./stats";
 import { displaySongList } from "./music"
 
 const routes: Record<string, string> = {
-	"/": "home",
-	"/game": "game",
-	"/flikhost": "flikhost",
-	"/stats": "stats",
-	"/music_player": "music_player"
+  "/": "home",
+  "/game": "game",
+  "/flikhost": "flikhost",
+  "/stats": "stats",
+  "/404": "404",
+  "/music_player": "music_player"
 };
 
+const pageCache: Record<string, string> = {};
+
 function load404(): void {
-	fetch("/404.html")
-		.then((res) => {
-			if (!res.ok) throw new Error("404 page not found");
-			return res.text();
-		})
-		.then((html) => {
-			const app = document.getElementById("app");
-			if (app) app.innerHTML = html;
-		})
-		.catch((err) => console.error("Failed to load 404:", err));
+  if (pageCache["404"]) {
+    const app = document.getElementById("app");
+    if (app) app.innerHTML = pageCache["404"];
+    return;
+  }
+
+  fetch("/404.html")
+    .then((res) => {
+      if (!res.ok) throw new Error("404 page not found");
+      return res.text();
+    })
+    .then((html) => {
+      pageCache["404"] = html;
+      const app = document.getElementById("app");
+      if (app) app.innerHTML = html;
+    })
+    .catch((err) => console.error("Failed to load 404:", err));
 }
 
 export async function render(path: string): Promise<void> {
-	const app = document.getElementById("app");
-	if (!app) return;
+  const app = document.getElementById("app");
+  if (!app) return;
 
-	const page = routes[path];
+  const page = routes[path];
 
-	if (!page) {
-		load404();
-		return;
-	}
+  if (!page) {
+    load404();
+    return;
+  }
 
-	try {
-		const res = await fetch(`/${page}.html`);
-		if (!res.ok) throw new Error("Page not found");
-		const html = await res.text();
-		app.innerHTML = html;
+  try {
+    if (pageCache[page]) {
+      removeIntervals();
+      app.innerHTML = pageCache[page];
+    } else {
+      const res = await fetch(`/${page}.html`);
+      if (!res.ok) throw new Error("Page not found");
+      const html = await res.text();
+      
+      pageCache[page] = html;
+      removeIntervals();
+      app.innerHTML = html;
+    }
 
-		switch (page) {
-			case "home":
-				addButtonClicks();
-				break;
-			case "flikhost":
-				reloadReferencesFlikhost();
-				break;
-			case "stats":
-				reloadReferencesStats();
-				break;
-			case "music_player":
-        displaySongList()
-				break;
-		}
+    switch (page) {
+      case "home":
+        addButtonClicks();
+        break;
+      case "flikhost":
+        reloadReferencesFlikhost();
+        break;
+      case "stats":
+        reloadReferencesStats();
+        break;
+      case "music_player":
+        displaySongList();
+        break;
+    }
 
-		checkImage();
-	} catch (err) {
-		console.error("Error rendering page:", err);
-		load404();
-	}
+    checkImage();
+  } catch (err) {
+    console.error("Error rendering page:", err);
+    load404();
+  }
+}
+
+function preloadCommonPages(): void {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(() => {
+      ['/', '/404'].forEach(path => {
+        const page = routes[path];
+        if (page && !pageCache[page]) {
+          fetch(`/${page}.html`)
+            .then(res => res.text())
+            .then(html => { pageCache[page] = html; })
+            .catch(() => {});
+        }
+      });
+    });
+  }
 }
 
 export function navigate(path: string): void {
-	history.pushState({}, "", path);
-	render(path);
+  history.pushState({}, "", path);
+  render(path);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-	const cameFrom = localStorage.getItem("404");
+  const cameFrom = localStorage.getItem("404");
 
-	if (cameFrom) {
-		navigate(cameFrom);
-		localStorage.removeItem("404");
-	} else {
-		render(location.pathname);
-	}
+  if (cameFrom) {
+    navigate(cameFrom);
+    localStorage.removeItem("404");
+  } else {
+    render(location.pathname);
+  }
 
-	window.addEventListener("popstate", () => {
-		render(location.pathname);
-	});
+  window.addEventListener("popstate", () => {
+    render(location.pathname);
+  });
 
-	document.body.addEventListener("click", (e: Event) => {
-		const target = e.target as HTMLElement;
-		if (target.matches("div[data-link]")) {
-			e.preventDefault();
-			const href = target.getAttribute("href");
-			if (href) navigate(href);
-		}
-	});
+  document.body.addEventListener("click", (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (target.matches("div[data-link]")) {
+      e.preventDefault();
+      const href = target.getAttribute("href");
+      if (href) navigate(href);
+    }
+  });
+  
+  // Preload common pages after initial page load
+  preloadCommonPages();
 });
 
 

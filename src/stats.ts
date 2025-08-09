@@ -255,6 +255,7 @@ async function getCurrentSong(): Promise<void> {
         spotifySongDuration = 0
         spotifySongProgress = 0
         spotifySongArtist = ""
+        spotifySongIcon = "/NoImage.jpg"
     } else {
         spotifySongArtist = data.track.artists[0]
         spotifySongName = data.track.name
@@ -434,15 +435,7 @@ export async function reloadReferencesStats(): Promise<void> {
     const spotifySongIconStat = document.getElementById('spotify-icon') as HTMLImageElement | null;
     const spotifySongLink = document.getElementById('spotify-link') as HTMLAnchorElement | null;
 
-    clearInterval(interval1)
-    clearInterval(interval2)
-    clearInterval(interval3)
-    clearInterval(interval4)
-    clearInterval(interval5)
-    clearInterval(interval6)
-    clearInterval(interval7)
-    clearInterval(interval8)
-    clearInterval(interval9)
+    removeIntervals()
 
     // Time stat
 
@@ -656,6 +649,25 @@ export async function reloadReferencesStats(): Promise<void> {
         }, 1000)
     }
 }
+
+export function removeIntervals(): void {
+    clearInterval(interval1)
+    clearInterval(interval2)
+    clearInterval(interval3)
+    clearInterval(interval4)
+    clearInterval(interval5)
+    clearInterval(interval6)
+    clearInterval(interval7)
+    clearInterval(interval8)
+    clearInterval(interval9)
+}
+
+document.querySelectorAll('img').forEach(img => {
+	if (!img.src || img.src.endsWith('/undefined')) {
+		console.log('Broken image:', img, 'Set by:', img.outerHTML);
+	}
+});
+
 
 (window as any).exposeStat = exposeStat;
 (window as any).exposeAllStats = exposeAllStats;
