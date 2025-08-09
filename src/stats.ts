@@ -25,7 +25,7 @@ let frames: number = 0
 let visitors: string = "0"
 
 let latestGamePlayed: string | null = null;
-let latestGameTime: number;
+let latestGameTime: number | string;
 let latestGameIcon: string;
 let latestGameID: string;
 
@@ -33,6 +33,7 @@ let steamUsername: string | null = null;
 let steamPfp: string;
 let steamCreated: number;
 let steamLastOnline: number;
+let steamFallback: boolean = false;
 
 let currentComment: string | null = null;
 let currentCommentAuthor: string | null = null;
@@ -154,23 +155,63 @@ async function fetchSteamProfile(): Promise<void> {
     }
 }
 
+interface SteamGames {
+    appid: number,
+    name: string,
+    img_icon_url: string,
+    rtime_last_played: number,
+    playtime_forever: number
+} //So TS will stop bitchin
+
+
 async function fetchSteamStats(): Promise<void> {
-    const url = `https://corsproxy.io/?url=https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key=${steamAPIKey}&steamid=76561198352376830&format=json`
+    // Try scrape the webpage first for more accurate results
+
+    const urlDefault = `https://api.flik.host/scrape_steam.php`
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(urlDefault);
         if (!response.ok) {
             throw new Error(`Response status: ${response.status}`)
         }
 
         const result = await response.json()
-        latestGamePlayed = result.response.games[0].name
-        latestGameIcon = result.response.games[0].img_icon_url
-        latestGameTime = result.response.games[0].playtime_forever
-        latestGameID = result.response.games[0].appid
+
+        latestGamePlayed = result.game_name
+        latestGameIcon = result.icon_url
+        latestGameTime = result.playtime.replace(" on record", "")
+        latestGameID = result.appid
+
+        steamFallback = false
+
+        return
+
+    } catch (error) {
+        console.log("Default method failed, falling back, " + error)
+    }
+
+    const urlFallback = `https://corsproxy.io/?url=https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${steamAPIKey}&steamid=76561198352376830&include_appinfo=1&format=json`
+
+    try {
+        const response = await fetch(urlFallback);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`)
+        }
+
+        const result = await response.json()
+
+        const games: SteamGames[] = result.response.games
+
+        games.sort((a, b) => b.rtime_last_played - a.rtime_last_played);
+
+        latestGamePlayed = games[0].name
+        latestGameIcon = games[0].img_icon_url
+        latestGameTime = games[0].playtime_forever
+        latestGameID = String(games[0].appid)
 
         latestGameIcon = `https://cdn.steamstatic.com/steamcommunity/public/images/apps/${latestGameID}/${latestGameIcon}.jpg`
 
+        steamFallback = true
     } catch (error) {
         console.log(error)
     }
@@ -402,7 +443,16 @@ export async function reloadReferencesStats(): Promise<void> {
     }
 
     if (gameTimeStat) {
-        gameTimeStat.innerText = formatPlaytime(latestGameTime)
+        if (steamFallback){
+            if (typeof latestGameTime === "number"){
+                gameTimeStat.innerText = formatPlaytime(latestGameTime)
+            }
+        } else {
+            if (typeof latestGameTime === "string") {
+                gameTimeStat.innerText = latestGameTime
+            }
+        }
+        
     }
 
     if (gameIcon) {
@@ -487,9 +537,17 @@ export async function reloadReferencesStats(): Promise<void> {
     if (OsStat) {
         if (window.navigator.platform){ //Truthy should help with obsolete
             let Os = window.navigator.platform
+            // @ts-ignore
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera
+
             if (Os.includes("Linux")){
                 Os = Os + " - Love to see it!"
             }
+
+            if (/android/i.test(userAgent)) {
+                Os = "Android - The best mobile OS"
+            }
+
             OsStat.innerText = Os
             // @ts-ignore
         } else if (navigator.userAgentData.platform) { //Fallback to newer version if supported
