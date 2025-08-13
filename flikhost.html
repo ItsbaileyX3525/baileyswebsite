@@ -1,0 +1,35 @@
+<script type="module" crossorigin src="/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
+<script type="module" crossorigin src="/assets/validCheck-C5Nb9lIb.js"></script>
+    <div class="flex flex-col justify-center items-center max-w-4xl mt-4 mx-auto px-4">
+        <p class="text-4xl">What is <a class="text-[#6d54b5]" target="_blank" href="https://flik.host">flikhost?</a></p>
+        <p class="text-2xl">Flikhost is a image and file hosting site that is free to use that I created with the help of an old friend Dexter. You're probably thinking why did I give this its own webpage? And that's a good question I'll answer down below.
+        </p>
+    </div>
+    <div class="max-w-md mx-auto mt-8 p-6 bg-gray-900 rounded-lg shadow-lg">
+        <form onsubmit="uploadImage(event, 'baileygamesand.codes', '73da618b-1127-4667-a96f-f6c4425ef5a8')" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label for="fileUpload" class="block text-sm text-gray-300 mb-2 text-center">
+                    Choose an image to upload:
+                </label>
+                <input type="file" name="file" id="file" accept="image/png,image/jpeg,image/gif,image/webp,image/ico,image/svg,image/avif" required class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-[#6d54b5] file:text-white file:cursor-pointer cursor-pointer">
+            </div>
+            <button type="submit" name="submit" class="w-full bg-[#6d54b5] text-white py-2 px-4 rounded-lg cursor-pointer">
+                Upload File
+            </button>
+        </form>
+    </div>
+    <div id="file-report" class="hidden flex-col items-center mt-4 gap-3 text-3xl">
+        <p class="text-green-500" id="file-status">File uploaded sucessfully!</p>
+        <p class="text-[#ff8c69]"><a href="example.com" id="file-name">file name.png</a></p>
+        <div class="flex justify-center overflow-auto">
+            <img class="max-w-4/5 max-h-4/5" id="image" src="/NoImage.jpg">
+        </div>
+        <p class="mt-4 text-2xl" id="hosted-text">This image is now hosted on the flikhost website that I created!</p>
+    </div>
+    <div id="Footer" class="flex mt-4 bg-gray-800 items-center justify-center h-20 gap-5">
+        <a href="https://github.com/ItsbaileyX3525" target="_blank"><img class="github-icon h-8 w-8 " src="assets/index/icons/github-white.svg" alt="github icon"></a>
+        <a href="https://youtube.com/@ItsbaileyX3525" target="_blank"><img class="youtube-icon h-8 w-8" src="assets/index/icons/youtube-white.svg" alt="youtube icon"></a>
+        <a href="https://discordapp.com/users/696709694391320696" target="_blank"><img class="discord-icon h-8 w-8" src="assets/index/icons/discord-white.svg" alt="youtube icon"></a>
+    </div>
+        <p class="bg-gray-800 text-center">© Copyright Jason Blundell. His zombies story was the best!</p>
+        <p class="text-center bg-gray-800 pt-2 text-[9px]">I have no idea how to center the footer without content above :(</p>

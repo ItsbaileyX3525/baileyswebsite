@@ -3,122 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preload" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/youtube-white.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/discord-white.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
-  <link rel="preload" as="image" href="/assets/index/icons/github-white.svg" type="image/svg+xml"/>
-  <title>Awesome index</title>
-  <script type="module" crossorigin src="/assets/main-Bb3cIovh.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/style-CTtukNrG.js">
-  <link rel="modulepreload" crossorigin href="/assets/nav-CMAV7MRT.js">
-  <link rel="stylesheet" crossorigin href="/assets/style-D7rCoCEE.css">
+  <link rel="prefetch" as="image" href="/assets/index/icons/youtube-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/discord-dark.svg" type="image/svg+xml"/>
+  <link rel="prefetch" as="image" href="/assets/index/icons/github-dark.svg" type="image/svg+xml"/>
+  <title>Bailey's website</title>
+  <script type="module" crossorigin src="/assets/main-Dhxc1dkM.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-BNoQ5QSh.css">
 </head>
 <body>
-  <div class="grid grid-cols-3 gap-2 text-center bg-blue-300 pb-0.5">
-    <div id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Home</div>
-    <div id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Games</div>
-    <div id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
+  <div class="grid grid-cols-5 gap-2 text-center  pb-0.5 rounded-b-2xl">
+    <div href="/" id="home-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Home</div>
+    <div href="/game" id="games-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Games</div>
+    <div href="/portfolio" id="portfolio-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]">Portfolio</div>
+    <div href="/flikhost" id="flikhost-button" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Flikhost</div>
+    <div href="/stats" class="bg-violet-400 rounded-b-2xl cursor-pointer select-none text-2xl hover:text-[25px] active:text-[23px]" data-link>Stats</div>
   </div>
-  <div class="flex justify-start ">
-    <div class="ml-3 mt-3 ">
-      <img class="rounded-[50%] min-w-[5rem] w-[10rem]" src="/assets/the lads.png" alt="An image of an awesome dude (Bailey)">
-    </div>
-    <div class="">
-      <p class="ml-[36px] mt-10 font-bold">Bailey Miles</p>
-      <p class="ml-[36px] mt-3 w-auto max-w-2xl">Hello! My name is Bailey, I have a passion for creating apps, games and websites! My main goal in life isn't to have a million pounds or know everyone on earth but rather to enjoy life. I love my life and I don't want it to ever end, so I will explore and learn as much as I can before my time comes.</p>
-    </div>
-      <div id="dark-mode-toggle" class="text-center min-w-30 w-50 mt-3 bg-violet-400 p-2 rounded-2xl cursor-pointer hover:text-[17px] active:text-[14px] select-none self-start ml-auto">
-      Toggle Dark Mode
-    </div>
+  <div id="music-details" class="bg-gray-500 fixed left-1/2 transform-[translateX(-50%)] bottom-5  px-2 py-1 rounded-2xl text-black opacity-0 transition-opacity duration-1000 ease-in-out">
+    <p>Now playing: DanTDM - Spacedog</p>
   </div>
-  <div class="grid grid-cols-3 text-center m-auto mt-20 gap-10 max-w-6xl">
-    <div id="info-box-1" class="bg-violet-400">
-      <p>Languages</p>
- <div class="grid grid-cols-[auto_1fr_auto] items-center text-center">
-          <div id="prev-language-button" class="mr-2 ml-1 cursor-pointer select-none">&lt;</div>
-          <img id="language-image" src="assets/index/baileyLanguage/Python.png" class="w-full h-40 object-contain m-auto pb-2" alt="Balil at the pier">
-          <div id="next-language-button" class="ml-2 mr-1 cursor-pointer select-none">&gt;</div>
+    <audio id="song">
+        <source id="song-source" src="/assets/DanTDM - Spacedog.mp3" type="audio/mpeg">
+    </audio>
+    <div class="absolute top-12 right-3">
+        <div class="flex gap-3">
+            <div id="music-player">
+                <img id="music-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/speaker_disabled.svg" alt="">
+            </div>
+            <div id="music-player-shuffle">
+                <img id="shuffle-image" class="bg-gray-600 rounded-md max-w-12 cursor-pointer" src="/assets/unshuffled.svg" alt="">
+            </div>
+            <div href="/music_player" id="music-player-settings" class="cursor-pointer" data-link>
+                <img class="bg-gray-600 rounded-md max-w-12 pointer-events-none" src="/assets/settings.svg" alt="">
+            </div>
         </div>
-        <p id="language-footer">Python is the very first language that I wrote in, back in 2020 when I started getting serious about coding!</p>
     </div>
-    <div id="info-box-2" class="bg-violet-400">
-      <p>Games</p>
-<div class="grid grid-cols-[auto_1fr_auto] items-center text-center">
-          <div id="prev-game-button" class="mr-2 ml-1 cursor-pointer select-none">&lt;</div>
-          <img id="game-image" src="assets/index/baileyGames/Sus clicker.png" class="w-full h-50 object-contain m-auto pb-2" alt="Balil's game">
-          <div id="next-game-button" class="ml-2 mr-1 cursor-pointer select-none">&gt;</div>
-        </div>
-        <p id="game-footer">Sus clicker, this game is my pride and joy, I've been making it for years! <a class='text-[#ff8c69]' href='https://itsbaileyx3525.itch.io/sus-clicker-remastered' target='_blank'>Check it out here!</a></p>
-    </div>
-    <div id="info-box-3" class="bg-violet-400 h-auto">
-      <p class="border-b-black">Adventures</p>
-        <div class="grid grid-cols-[auto_1fr_auto] items-center text-center">
-          <div id="prev-adventure-button" class="mr-2 ml-1 cursor-pointer select-none">&lt;</div>
-          <img id="adventure-image" src="assets/index/baileyAdventure/Bailey at the pier.jpg" class="w-full h-60 object-contain m-auto pb-2" alt="Balil at the pier">
-          <div id="next-adventure-button" class="ml-2 mr-1 cursor-pointer select-none">&gt;</div>
-        </div>
-        <p id="adventure-footer">Bailey outside (shock) walking down the pier at the local beach</p>
-    </div>
+  <div id="app">
   </div>
-  <div class="flex bg-gray-700 mt-3 justify-center border-b-[.5px] border-black">
-    <h2 class="text-2xl">FAQ</h2>
-  </div>
-    <div class="grid grid-cols-4 text-center">
-      <div id="FAQ1" class="bg-gray-700 border-[1.5px] border-black">
-        <p class="text-xl text-green-400">
-          Why do my other websites look better?
-        </p>
-        <p class="text-[14px] pr-1">
-          Well I think you could figure that out yourself haha.
-          The reason my other websites look better than this is
-          because I have no idea how to use CSS which means I
-          have AI create it for me, which I know is bad and I should've
-          started learning a long time ago but here we are, getting
-          the basics down!
-        </p>
-      </div>
-      <div id="FAQ2" class="bg-gray-700 border-[1.5px] border-black">
-        <p class="text-xl text-green-400">
-          What got you into coding?
-        </p>
-        <p class="text-[14px]">
-          There was many things that got me into coding, seeing
-          all the cool apps and websites people could make but the
-          thing that drove me was seeing people happy playing games,
-          find out cool secrets and just enjoying the content.
-        </p>
-      </div>
-      <div id="FAQ3" class="bg-gray-700 border-[1.5px] border-black">
-        <p class="text-xl text-green-400">
-          What other things do you do?
-        </p>
-        <p class="text-[14px] pr-1">
-          ... Not much really. If I'm not coding then I'm playing dead by daylight,
-          not very productive I know. And maybe 2-3 times a year I might travel to
-          the local gathering and once a year go outside my council. My life is
-          very boring but thankfully college makes life more boring so the things
-          that are boring right now become fun! however when summer break happens...
-          Life is heck.
-        </p>
-      </div>
-      <div id="FAQ4" class="bg-gray-700 border-[1.5px] border-black">
-        <p class="text-xl text-green-400">
-          Any asperations?
-        </p>
-        <p class="text-[14px] pr-1">
-          Not much I suppose, I just want to make games that people can
-          have fun playing and create websites that look appealing (unlike this one.)
-          as for my future I have no plans really, just exist for as long as I can.
-        </p>
-      </div>
-    </div>
-    <div id="Footer" class="flex mt-4 bg-gray-800 items-center justify-center h-20 gap-5">
-      <a href="https://github.com/ItsbaileyX3525" target="_blank"><img class="github-icon h-8 w-8 " src="assets/index/icons/github-white.svg" alt="github icon"></a>
-      <a href="https://youtube.com/@ItsbaileyX3525" target="_blank"><img class="youtube-icon h-8 w-8" src="assets/index/icons/youtube-white.svg" alt="youtube icon"></a>
-      <a href="https://discordapp.com/users/696709694391320696" target="_blank"><img class="discord-icon h-8 w-8" src="assets/index/icons/discord-white.svg" alt="youtube icon"></a>
-    </div>
-      <p class="bg-gray-800 text-center">© Copyright Your Website Name. Bet you thought AI had wrote that then.</p>
-  </body>
+</body>
 </html> 
